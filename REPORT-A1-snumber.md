@@ -1,0 +1,51 @@
+# Advanced Programming, 2025-2026 | Assignment 1
+
+Student: <snumber> - <Name(s)> <Surname(s)>
+
+## Task Distribution
+
+### Planned
+
+> NOTE: This part of the report ("Planned" subsection) should be committed to the repository within the first few days. Otherwise, we assume that the students had no agreement early on, which will impact disputes on expected workload (should they emerge).
+
+In this section, describe the initial plan to distribute the tasks between the group members.
+There are several different ways to distribute the tasks, could be based on parts of the system, or type of responsibility. It is important that this description is as detailed as possible to avoid misunderstandings later on.
+
+This part should include an explicit declaration of expected workload, stating that all students are expected to have the same workload or, if not, the expected load distribution. See an example of each below:
+- "Based on the task distribution above, I declare that I expect all students to have the same workload."
+- "Based on the task distribution above, I declare that I expect <Name> (<snumber>) to handle about 40% of the workload, <Name> (<snumber>) to handle about 30% of the workload, and <Name> (<snumber>) to handle about 30% of the workload."
+
+### Executed
+
+In this section you report the tasks you performed in practice, AND what tasks you believe your team members performed. Again, be as detailed as possible. This is YOUR report, i.e., your take on the work distribution of all students in this group. For each student, report two things: (a) the tasks and (b) the overall workload. This reporting will be used as the basis for any disputes.
+
+- Student <snumber>: (YOU first)
+    - Tasks:
+        - (list of tasks)
+    - Workload:
+        - I believe I did X% of the work. (e.g., 1/3, half, etc.)
+
+- Student <snumber>:
+    - Tasks:
+        - (list of tasks)
+    - Workload:
+        - I believe that <Name> did X% of the work. (e.g., 1/3, half, etc.)
+
+- Student <snumber>:
+    - Tasks:
+        - (list of tasks)
+    - Workload:
+        - I believe that <Name> did X% of the work. (e.g., 1/3, half, etc.)
+
+> NOTE: The workload distribution will impact individual grades (if other than equal workloads). If we note any discrepancies in the reports, the work distribution will be discussed with the group.
+
+## Use of GenAI
+
+Report YOUR use of GenAI, according to the guidelines in the assignment description.
+
+
+## Declaration
+
+[ ] I declare that the information in this report is truthful and accurate.
+
+[ ] The content in this report and my delivered code is my own work, potentially supported by generative AI tools, and I take full responsibility for the content.
