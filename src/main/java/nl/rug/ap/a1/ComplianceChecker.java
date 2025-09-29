@@ -58,6 +58,8 @@ public class ComplianceChecker {
             if (e.getActivity().equals("Remove Payment Block")) counter--;
             // Check if invoice is cleared before closing the PB
             if (e.getActivity().equals("Clear Invoice") && counter != 0) return false;
+            // Check if at any point the block is removed before being set
+            if (counter < 0) return false;
         }
         // Check for exact match of Opened and Closed PBs
         return counter == 0;

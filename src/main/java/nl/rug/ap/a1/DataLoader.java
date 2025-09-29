@@ -14,6 +14,9 @@ import java.util.Map;
 @NoArgsConstructor
 public class DataLoader {
 
+    private static int recordCount = 0;
+    private static int dotCount = 0;
+
     public boolean load(Map<String, Trace> traceMap, String fileName){
         // Reads CSV file as a stream of RAW bytes
         InputStream stream = Main.class.getClassLoader().getResourceAsStream(fileName);
@@ -22,14 +25,28 @@ public class DataLoader {
             return false;
         }
 
+        // Start animation thread (this is a separate thread making loading animation)
+        // Idea is to separate animation from loading the database (as then would the animation be too fast)
+        final boolean[] loadingDone = {false};
+        Thread dotThread = new Thread(() -> {
+            int dotCount = 0;
+            while (!loadingDone[0]) {
+                String dots = ".".repeat(dotCount % 4); // "", ".", "..", "..."
+                System.out.print("\rFetching data from database" + dots + "   ");
+                System.out.flush();
+                dotCount++;
+                // Increase the dot count after 0.3 seconds
+                try { Thread.sleep(300); } catch (InterruptedException ignored) {}
+            }
+        });
+        dotThread.start();
+
         // Converts raw bytes into readable text
         try (Reader in = new InputStreamReader(stream, StandardCharsets.ISO_8859_1)){
             // Parses the stream (Readable now) into separate records
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
                     .parse(in);
-
-            System.out.println("Fetching data from database...");
 
             // Iterate over each record
             for (CSVRecord record : records) {
@@ -49,7 +66,9 @@ public class DataLoader {
             return false;
         }
 
-        System.out.println("Database Loaded Successfully");
+        loadingDone[0] = true; // Stops the animation
+        System.out.println("\rDatabase Loaded Successfully");
+        System.out.flush();
         return true;
     }
 }
