@@ -35,13 +35,7 @@
             <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
-        <!-- Dependency for efficient parsing and handling of CSV files -->
-        <dependency>
-            <groupId>com.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>5.9</version>
-        </dependency>
-        <!-- Lombok library to reduce boilerplate code  -->
+        <!-- Lombok library -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

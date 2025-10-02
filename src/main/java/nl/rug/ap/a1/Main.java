@@ -13,8 +13,6 @@ public class Main {
         Map<String, Trace> traceMap = new HashMap<>();
         // Loads data from CSV to Map
         DataLoader loader = new DataLoader();
-        // Scans the configuration from user
-        Scanner scanner = new Scanner(System.in);
         // Processes Traces with Multithread Queue
         ComplianceApp multithreadApp = new ComplianceApp();
         // Initialize tracker (Observer) and add the App (observable)
@@ -26,10 +24,17 @@ public class Main {
             return;
         }
 
-        // Prompts user to choose the configuration of threads
+        // Run the multithreading evaluation on Traces in configurable thread number
+        multithreadApp.startComplianceCheck(traceMap, getConfig());
+    }
+
+    private static int getConfig(){
+        Scanner scanner = new Scanner(System.in);
         int noOfThreads;
+
+        System.out.println("------ Configuration ------- ");
         while (true){
-            System.out.print("Configuration -- Enter the number of Threads to use: ");
+            System.out.print("Enter number of threads to use: ");
             if (scanner.hasNextInt()){
                 noOfThreads = scanner.nextInt();
                 break;
@@ -38,8 +43,6 @@ public class Main {
                 scanner.next();
             }
         }
-
-        // Run the multithreading evaluation on Traces in configurable thread number
-        multithreadApp.startComplianceCheck(traceMap, noOfThreads);
+        return noOfThreads;
     }
 }

@@ -15,7 +15,6 @@ import java.util.Map;
 public class DataLoader {
 
     private static int recordCount = 0;
-    private static int dotCount = 0;
 
     public boolean load(Map<String, Trace> traceMap, String fileName){
         // Reads CSV file as a stream of RAW bytes
