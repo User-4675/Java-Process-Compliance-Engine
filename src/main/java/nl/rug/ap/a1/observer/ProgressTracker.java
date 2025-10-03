@@ -76,7 +76,7 @@ public class ProgressTracker implements ProgressObserver {
                 ConsoleColor.BLUE + "Processed: " + ConsoleColor.RESET + processed
                         + ConsoleColor.GREEN + " Compliant: " + ConsoleColor.RESET + compliant
                         + ConsoleColor.RED + " Non-Compliant: " + ConsoleColor.RESET + nonCompliant
-                        + ConsoleColor.YELLOW + " Unknown: " + ConsoleColor.RESET);
+                        + ConsoleColor.YELLOW + " Unknown: " + ConsoleColor.RESET + unknown);
 
         double maxMemory = maxMemoryUsed / (1024.0 * 1024.0); // MB
         double totalAppRuntime = (end - start) / 1_000_000_000.0; // Seconds
