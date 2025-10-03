@@ -7,35 +7,60 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Entry point for the compliance checking application.
+ * <p>
+ * Loads traces from a CSV file, sets up a multithreaded {@link ComplianceApp}
+ * with a {@link ProgressTracker} observer, and executes the compliance evaluation.
+ * The number of threads can be configured via user input.
+ */
 public class Main {
-    public static void main(String[] args) {
-        // Maps ID of Traces with actual objects loaded from database
-        Map<String, Trace> traceMap = new HashMap<>();
-        // Loads data from CSV to Map
-        DataLoader loader = new DataLoader();
-        // Processes Traces with Multithread Queue
-        ComplianceApp multithreadApp = new ComplianceApp();
-        // Initialize tracker (Observer) and add the App (observable)
-        ProgressTracker tracker = new ProgressTracker();
-        multithreadApp.addObserver(tracker);
 
-        // Load Entries from CSV file to Hash Map
-        if (!loader.load(traceMap, "BPI_Challenge_2019.csv")){
+    /**
+     * Main method to start the compliance checking application.
+     * <p>
+     * Performs the following steps:
+     * <ul>
+     *     <li>Creates a map to store traces loaded from CSV</li>
+     *     <li>Initializes {@link DataLoader} to load traces</li>
+     *     <li>Sets up {@link ComplianceApp} and {@link ProgressTracker}</li>
+     *     <li>Loads traces into the map and runs the multithreaded evaluation</li>
+     * </ul>
+     *
+     * @param args command-line arguments (not used)
+     */
+    public static void main(String[] args) {
+        Map<String, Trace> traceMap = new HashMap<>();
+
+        DataLoader loader = new DataLoader();
+
+        ComplianceApp multithreadComplianceApp = new ComplianceApp();
+
+        ProgressTracker tracker = new ProgressTracker();
+        multithreadComplianceApp.addObserver(tracker);
+
+        if (!loader.load(traceMap, "BPI_Challenge_2019.csv")) {
             return;
         }
 
-        // Run the multithreading evaluation on Traces in configurable thread number
-        multithreadApp.startComplianceCheck(traceMap, getConfig());
+        multithreadComplianceApp.startComplianceCheck(traceMap, getConfig());
     }
 
-    private static int getConfig(){
+    /**
+     * Reads the number of threads to use from user input.
+     * <p>
+     * Continuously prompts the user until a valid integer is entered.
+     *
+     * @return the number of threads to use for processing traces
+     */
+    private static int getConfig() {
         Scanner scanner = new Scanner(System.in);
         int noOfThreads;
 
         System.out.println("------ Configuration ------- ");
-        while (true){
+        while (true) {
             System.out.print("Enter number of threads to use: ");
-            if (scanner.hasNextInt()){
+            if (scanner.hasNextInt()) {
                 noOfThreads = scanner.nextInt();
                 break;
             } else {

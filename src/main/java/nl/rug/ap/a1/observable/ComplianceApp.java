@@ -1,4 +1,5 @@
 package nl.rug.ap.a1.observable;
+
 import lombok.NoArgsConstructor;
 import nl.rug.ap.a1.ComplianceChecker;
 import nl.rug.ap.a1.Trace;
@@ -10,38 +11,49 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * Observable application that performs compliance checking on traces.
+ * <p>
+ * Implements {@link Observable} and follows a producer-consumer pattern to process traces
+ * using multiple threads. Notifies a {@link ProgressObserver} about the progress
+ * and reports final statistics such as total processing time and memory usage.
+ */
 @NoArgsConstructor
-public class ComplianceApp implements Observable{
+public class ComplianceApp implements Observable {
 
-    // We only have one observer (The Tracker) thus single variable instead of array
+    /** The observer that receives progress updates (typically a {@link ProgressObserver}). */
     private ProgressObserver observer;
 
-    // Flags the Traces based check conditions
+    /** Checker that evaluates trace compliance. */
     ComplianceChecker checker = new ComplianceChecker();
 
-    // This is a special Trace object used to signal to consumers finished processing.
-    // It is added to the end of the queue.
+    /** Special trace used as a marker to signal completion to consumers. */
     private static final Trace POISON_PILL = new Trace("POISON");
 
-    // Measurement of app performance
-    private long totalCheckTime, maxMemoryUsed;
+    /** Total time spent checking traces (nanoseconds). */
+    private long totalCheckTime;
 
-    public void startComplianceCheck(Map<String, Trace> traceMap, int nOfThreads){
+    /** Maximum memory used during processing (bytes). */
+    private long maxMemoryUsed;
 
-        // Track the start of App
+    /**
+     * Starts the compliance checking process on the provided traces using multiple threads.
+     * <p>
+     * Produces traces into a blocking queue, consumes them concurrently, checks compliance,
+     * updates metrics, and notifies the observer about progress.
+     *
+     * @param traceMap    map of trace IDs to {@link Trace} objects to process
+     * @param nOfThreads  number of consumer threads to use
+     */
+    public void startComplianceCheck(Map<String, Trace> traceMap, int nOfThreads) {
         long appStart = System.nanoTime();
 
-        // Create a BlockingQueue for Multithreading
         BlockingQueue<Trace> bQueue = new LinkedBlockingQueue<>();
 
-        // Starts the producer Thread
-        //   -> Enqueue all Traces
-        //   -> Add poison pill marker at the end of Queue after step 1
         Thread producer = new Thread(() -> {
             loadQueue(bQueue, traceMap);
             for (int i = 0; i < nOfThreads; i++) {
                 try {
-                    // Add poison pill at the end
                     bQueue.put(POISON_PILL);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -50,7 +62,6 @@ public class ComplianceApp implements Observable{
         });
         producer.start();
 
-        // Starts consumer Threads
         List<Thread> consumers = new ArrayList<>();
         for (int i = 0; i < nOfThreads; i++) {
             Thread consumer = new Thread(() -> processTraces(bQueue));
@@ -58,8 +69,6 @@ public class ComplianceApp implements Observable{
             consumers.add(consumer);
         }
 
-        // Wait for all threads to finish and handle exceptions
-        // We do this so we can print the final report only after processing all Threads
         try {
             producer.join();
             for (Thread t : consumers) {
@@ -70,14 +79,20 @@ public class ComplianceApp implements Observable{
             System.out.println("Thread was interrupted while waiting for completion.");
         }
 
-        long appEnd = System.nanoTime(); // Track the end of App
+        long appEnd = System.nanoTime();
         observer.reportFinalProgress(appStart, appEnd, totalCheckTime, maxMemoryUsed);
     }
 
-    private void loadQueue(BlockingQueue<Trace> bQueue, Map<String, Trace> traceMap){
-        for (Trace t : traceMap.values()){
+    /**
+     * Loads all traces into the blocking queue for consumers.
+     *
+     * @param bQueue   the queue to add traces to
+     * @param traceMap map of traces to process
+     */
+    private void loadQueue(BlockingQueue<Trace> bQueue, Map<String, Trace> traceMap) {
+        for (Trace t : traceMap.values()) {
             try {
-                bQueue.put(t); // waits if queue is full
+                bQueue.put(t);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
@@ -85,42 +100,61 @@ public class ComplianceApp implements Observable{
         }
     }
 
-    private void processTraces(BlockingQueue<Trace> bQueue){
+    /**
+     * Consumes traces from the queue, checks compliance, records metrics,
+     * and notifies the observer.
+     *
+     * @param bQueue the queue to consume traces from
+     */
+    private void processTraces(BlockingQueue<Trace> bQueue) {
         try {
             while (true) {
-                Trace trace = bQueue.take(); // waits if queue is empty
+                Trace trace = bQueue.take();
                 if (trace == POISON_PILL) break;
 
                 long start = System.nanoTime();
-                checker.check(trace); // check trace status
+                checker.check(trace);
                 long end = System.nanoTime();
 
                 recordMetrics(start, end);
-                notifyObserver(trace); // Notify observer about new progress
-                observer.reportProgress(); // Change the status
+                notifyObserver(trace);
+                observer.reportProgress();
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
     }
 
+    /**
+     * Records processing time and updates maximum memory usage.
+     *
+     * @param start start time in nanoseconds
+     * @param end   end time in nanoseconds
+     */
     private synchronized void recordMetrics(long start, long end) {
-        // Update total check time
         totalCheckTime += (end - start);
 
-        // Update max memory used
         long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         if (usedMemory > maxMemoryUsed) maxMemoryUsed = usedMemory;
     }
 
-
+    /**
+     * Registers a {@link ProgressObserver} to receive updates.
+     *
+     * @param observer the observer to add
+     */
     @Override
-    public void addObserver(ProgressObserver observer){
+    public void addObserver(ProgressObserver observer) {
         this.observer = observer;
     }
 
+    /**
+     * Notifies the registered observer about a processed trace.
+     *
+     * @param trace the trace that was processed
+     */
     @Override
-    public void notifyObserver(Trace trace){
+    public void notifyObserver(Trace trace) {
         observer.updateProgress(trace);
     }
 }

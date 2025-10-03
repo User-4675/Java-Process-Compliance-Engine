@@ -11,56 +11,65 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+/**
+ * Loads trace data from a CSV file into a map of {@link Trace} objects.
+ * <p>
+ * This class reads the CSV file as a stream, parses each record, and converts it into {@link Trace}
+ * and {@link Event} objects. It also displays a simple loading animation while reading the file.
+ */
 @NoArgsConstructor
 public class DataLoader {
 
-    private static int recordCount = 0;
-
-    public boolean load(Map<String, Trace> traceMap, String fileName){
-        // Reads CSV file as a stream of RAW bytes
+    /**
+     * Loads traces from a CSV file and populates the provided map.
+     * <p>
+     * Each CSV record is parsed to extract the case ID, activity name, and timestamp.
+     * If a trace for a given case ID already exists, the new event is appended; otherwise, a new
+     * {@link Trace} is created. The method ensures all events are stored in the map keyed by
+     * their case ID.
+     *
+     * @param traceMap the map to populate with trace objects, keyed by case ID
+     * @param fileName the name of the CSV file to load
+     * @return {@code true} if the file was successfully loaded; {@code false} otherwise
+     */
+    public boolean load(Map<String, Trace> traceMap, String fileName) {
+        // Reads CSV file as a stream of raw bytes
         InputStream stream = Main.class.getClassLoader().getResourceAsStream(fileName);
         if (stream == null) {
             System.out.println("Resource not found");
             return false;
         }
 
-        // Start animation thread (this is a separate thread making loading animation)
-        // Idea is to separate animation from loading the database (as then would the animation be too fast)
+        // Start animation thread (separate from main loading to simulate progress)
         final boolean[] loadingDone = {false};
         Thread dotThread = new Thread(() -> {
             int dotCount = 0;
             while (!loadingDone[0]) {
-                String dots = ".".repeat(dotCount % 4); // "", ".", "..", "..."
+                String dots = ".".repeat(dotCount % 4);
                 System.out.print("\rFetching data from database" + dots + "   ");
                 System.out.flush();
                 dotCount++;
-                // Increase the dot count after 0.3 seconds
                 try { Thread.sleep(300); } catch (InterruptedException ignored) {}
             }
         });
         dotThread.start();
 
         // Converts raw bytes into readable text
-        try (Reader in = new InputStreamReader(stream, StandardCharsets.ISO_8859_1)){
-            // Parses the stream (Readable now) into separate records
+        try (Reader in = new InputStreamReader(stream, StandardCharsets.ISO_8859_1)) {
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
                     .parse(in);
 
-            // Iterate over each record
             for (CSVRecord record : records) {
-                // Get its ID, activity and time
                 String caseId = record.get("case concept:name");
                 String activity = record.get("event concept:name");
                 String timestamp = record.get("event time:timestamp");
 
-                // Stores the Trace into map --> <"CaseID", Trace object>
-                // Finds if case already exists, otherwise creates its
-                // Then appends the event to the case number
-                traceMap.computeIfAbsent(caseId, Trace::new).addEvent(new Event(activity, timestamp));
+                traceMap.computeIfAbsent(caseId, Trace::new)
+                        .addEvent(new Event(activity, timestamp));
             }
 
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
