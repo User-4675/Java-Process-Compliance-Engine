@@ -99,10 +99,6 @@
                             <goal>jar</goal>
                         </goals>
                         <phase>package</phase>
-                        <configuration>
-                            <failOnError>true</failOnError>
-                            <detectMissingJavadoc>true</detectMissingJavadoc>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

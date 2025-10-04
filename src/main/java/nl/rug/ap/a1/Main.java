@@ -5,14 +5,13 @@ import nl.rug.ap.a1.observer.ProgressTracker;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * Entry point for the compliance checking application.
  * <p>
  * Loads traces from a CSV file, sets up a multithreaded {@link ComplianceApp}
  * with a {@link ProgressTracker} observer, and executes the compliance evaluation.
- * The number of threads can be configured via user input.
+ * The number of threads and live progress can be configured via user input.
  */
 public class Main {
 
@@ -36,6 +35,8 @@ public class Main {
 
         ComplianceApp multithreadComplianceApp = new ComplianceApp();
 
+        Configuration config = new Configuration();
+
         ProgressTracker tracker = new ProgressTracker();
         multithreadComplianceApp.addObserver(tracker);
 
@@ -43,31 +44,8 @@ public class Main {
             return;
         }
 
-        multithreadComplianceApp.startComplianceCheck(traceMap, getConfig());
-    }
+        config.getConfiguration();
 
-    /**
-     * Reads the number of threads to use from user input.
-     * <p>
-     * Continuously prompts the user until a valid integer is entered.
-     *
-     * @return the number of threads to use for processing traces
-     */
-    private static int getConfig() {
-        Scanner scanner = new Scanner(System.in);
-        int noOfThreads;
-
-        System.out.println("------ Configuration ------- ");
-        while (true) {
-            System.out.print("Enter number of threads to use: ");
-            if (scanner.hasNextInt()) {
-                noOfThreads = scanner.nextInt();
-                break;
-            } else {
-                System.out.println("Please enter an Integer");
-                scanner.next();
-            }
-        }
-        return noOfThreads;
+        multithreadComplianceApp.startComplianceCheck(traceMap, config.getNoOfThreads(), config.isShowLiveProgress());
     }
 }

@@ -49,7 +49,11 @@ public class DataLoader {
                 System.out.print("\rFetching data from database" + dots + "   ");
                 System.out.flush();
                 dotCount++;
-                try { Thread.sleep(300); } catch (InterruptedException ignored) {}
+                try { Thread.sleep(300); }
+                catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
             }
         });
         dotThread.start();

@@ -45,26 +45,22 @@ public class ComplianceApp implements Observable {
      * @param traceMap    map of trace IDs to {@link Trace} objects to process
      * @param nOfThreads  number of consumer threads to use
      */
-    public void startComplianceCheck(Map<String, Trace> traceMap, int nOfThreads) {
+    public void startComplianceCheck(Map<String, Trace> traceMap, int nOfThreads, boolean showProg) {
         long appStart = System.nanoTime();
 
         BlockingQueue<Trace> bQueue = new LinkedBlockingQueue<>();
-
         Thread producer = new Thread(() -> {
             loadQueue(bQueue, traceMap);
-            for (int i = 0; i < nOfThreads; i++) {
-                try {
-                    bQueue.put(POISON_PILL);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
+            for (int i = 0; i < nOfThreads; i++){
+                try { bQueue.put(POISON_PILL);}
+                catch (InterruptedException e){ Thread.currentThread().interrupt();}
             }
         });
         producer.start();
 
         List<Thread> consumers = new ArrayList<>();
         for (int i = 0; i < nOfThreads; i++) {
-            Thread consumer = new Thread(() -> processTraces(bQueue));
+            Thread consumer = new Thread(() -> processTraces(bQueue, showProg));
             consumer.start();
             consumers.add(consumer);
         }
@@ -106,7 +102,7 @@ public class ComplianceApp implements Observable {
      *
      * @param bQueue the queue to consume traces from
      */
-    private void processTraces(BlockingQueue<Trace> bQueue) {
+    private void processTraces(BlockingQueue<Trace> bQueue, boolean showProg) {
         try {
             while (true) {
                 Trace trace = bQueue.take();
@@ -118,7 +114,7 @@ public class ComplianceApp implements Observable {
 
                 recordMetrics(start, end);
                 notifyObserver(trace);
-                observer.reportProgress();
+                if (showProg) observer.reportProgress();
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

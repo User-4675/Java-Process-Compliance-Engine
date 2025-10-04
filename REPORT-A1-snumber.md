@@ -19,7 +19,7 @@ This part should include an explicit declaration of expected workload, stating t
 
 In this section you report the tasks you performed in practice, AND what tasks you believe your team members performed. Again, be as detailed as possible. This is YOUR report, i.e., your take on the work distribution of all students in this group. For each student, report two things: (a) the tasks and (b) the overall workload. This reporting will be used as the basis for any disputes.
 
-- Student <snumber>: (YOU first)
+- Student <5866413>: (Samuel Mikuláš)
     - Tasks:
         - (list of tasks)
     - Workload:
