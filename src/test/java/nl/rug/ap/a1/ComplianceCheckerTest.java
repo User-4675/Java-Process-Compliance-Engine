@@ -79,12 +79,12 @@ class ComplianceCheckerTest {
     }
 
     @Test
-    void testComplexTraceCompliant() {
+    void testComplexTraceCompliantNotSorted() {
         Trace trace = new Trace("6");
-        trace.addEvent(new Event("Record Invoice Receipt", "01-01-2025 10:00:00.000"));
-        trace.addEvent(new Event("Set Payment Block", "01-01-2025 10:30:00.000"));
-        trace.addEvent(new Event("Remove Payment Block", "01-01-2025 11:00:00.000")); // Removed before clearing
         trace.addEvent(new Event("Clear Invoice", "01-01-2025 11:30:00.000"));
+        trace.addEvent(new Event("Record Invoice Receipt", "01-01-2025 10:00:00.000"));
+        trace.addEvent(new Event("Remove Payment Block", "01-01-2025 11:00:00.000")); // Removed before clearing
+        trace.addEvent(new Event("Set Payment Block", "01-01-2025 10:30:00.000"));
 
         checker.check(trace);
 
@@ -99,6 +99,6 @@ class ComplianceCheckerTest {
 
     @AfterAll
     static void end(){
-        System.out.println("Compliance Checker passed all tests !");
+        System.out.println("ComplianceChecker passed all tests !");
     }
 }

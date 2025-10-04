@@ -44,6 +44,7 @@ public class ComplianceApp implements Observable {
      *
      * @param traceMap    map of trace IDs to {@link Trace} objects to process
      * @param nOfThreads  number of consumer threads to use
+     * @param showProg    Enable/Disable live progress
      */
     public void startComplianceCheck(Map<String, Trace> traceMap, int nOfThreads, boolean showProg) {
         long appStart = System.nanoTime();
