@@ -11,16 +11,14 @@ class DataLoaderTest {
 
     private Map<String, Trace> traces;
 
+    @BeforeAll
+    static void start(){System.out.println("Testing Data Loader...");}
+
     @BeforeEach
     void setUp(){
         traces = new HashMap<>();
         DataLoader loader = new DataLoader();
-        loader.load(traces, "testDatabase1.csv");
-    }
-
-    @BeforeAll
-    static void start(){
-        System.out.println("Testing Data Loader...");
+        loader.load(traces, "testDatabase.csv");
     }
 
     @Test
@@ -54,12 +52,8 @@ class DataLoaderTest {
     }
 
     @AfterEach
-    void tearDown(){
-        System.out.println("Test Completed.");
-    }
+    void tearDown(){System.out.println("Test Completed.");}
 
     @AfterAll
-    static void end(){
-        System.out.println("DataLoader passed all checks !");
-    }
+    static void end(){System.out.println("DataLoader passed all checks !");}
 }

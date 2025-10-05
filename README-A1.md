@@ -9,13 +9,14 @@ This README provides instructions on how to compile and run the application, alo
 
        mvn clean package
 
-This will:
-- Clean any previous build files.
-- Compile all Java source files.
-- Run unit tests.
-- Generate a runnable JAR with all dependencies.
+    This will:
+    
+    - Clean any previous build files.
+    - Compile all Java source files.
+    - Run unit tests.
+    - Generate a runnable JAR with all dependencies.
 
-After this step, the JAR will be located at:
+    After this step, the JAR will be located at:
 
        target/assignment1-1.0-SNAPSHOT-jar-with-dependencies.jar
 

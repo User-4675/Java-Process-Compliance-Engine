@@ -8,15 +8,11 @@ class ComplianceCheckerTest {
 
     private ComplianceChecker checker;
 
-    @BeforeEach
-    void setUp() {
-        checker = new ComplianceChecker();
-    }
-
     @BeforeAll
-    static void start(){
-        System.out.println("Testing Compliance checker...");
-    }
+    static void start(){System.out.println("Testing Compliance checker...");}
+
+    @BeforeEach
+    void setUp() {checker = new ComplianceChecker();}
 
     @Test
     void testUnknownEventKeepsStatusUnknown() {
@@ -93,12 +89,8 @@ class ComplianceCheckerTest {
     }
 
     @AfterEach
-    void tearDown() {
-        System.out.println("Test completed.");
-    }
+    void tearDown() {System.out.println("Test completed.");}
 
     @AfterAll
-    static void end(){
-        System.out.println("ComplianceChecker passed all tests !");
-    }
+    static void end(){System.out.println("ComplianceChecker passed all tests !");}
 }

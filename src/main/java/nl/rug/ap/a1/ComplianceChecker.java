@@ -35,7 +35,7 @@ public class ComplianceChecker {
             return; // Leave the trace as UNKNOWN
         }
 
-        trace.sortEvents(); // Sorts events by timestamp
+        trace.sortEvents();
         if (!checkPaymentCycles(trace)) {
             trace.setStatus(TraceStatus.NONCOMPLIANT);
         } else if (!checkPaymentBlocks(trace)) {
