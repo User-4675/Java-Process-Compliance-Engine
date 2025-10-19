@@ -68,8 +68,10 @@ public class DataLoader {
                 String caseId = record.get("case concept:name");
                 String activity = record.get("event concept:name");
                 String timestamp = record.get("event time:timestamp");
+                String itemCategory = record.get("case Item Category");
+                // System.out.println(itemCategory);
 
-                traceMap.computeIfAbsent(caseId, Trace::new)
+                traceMap.computeIfAbsent(caseId, id -> new Trace(id, itemCategory))
                         .addEvent(new Event(activity, timestamp));
             }
 

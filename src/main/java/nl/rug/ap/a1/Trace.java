@@ -22,6 +22,9 @@ public class Trace {
     /** Current status of the trace. */
     private TraceStatus status;
 
+    /** Type of the trace */
+    private TraceType type;
+
     /** List of events associated with this trace. */
     private final List<Event> events = new ArrayList<>();
 
@@ -31,9 +34,14 @@ public class Trace {
      *
      * @param id the unique identifier for the trace
      */
-    public Trace(String id) {
+    public Trace(String id, String traceType) {
         this.id = id;
         this.status = TraceStatus.UNKNOWN;
+        if (traceType.equals("3-way match, invoice after GR")) this.type = TraceType.ThreeWayAfterGR;
+        if (traceType.equals("3-way match, invoice before GR")) this.type = TraceType.ThreeWayBeforeGR;
+        if (traceType.equals("2-way match")) this.type = TraceType.TwoWayMatch;
+        if (traceType.equals("Consignment")) this.type = TraceType.Consignment;
+        if (traceType.equals("POISON")) this.type = TraceType.POISON;
     }
 
     /**

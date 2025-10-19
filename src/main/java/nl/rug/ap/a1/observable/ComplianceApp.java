@@ -3,6 +3,7 @@ package nl.rug.ap.a1.observable;
 import lombok.NoArgsConstructor;
 import nl.rug.ap.a1.ComplianceChecker;
 import nl.rug.ap.a1.Trace;
+import nl.rug.ap.a1.TraceType;
 import nl.rug.ap.a1.observer.ProgressObserver;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class ComplianceApp implements Observable {
     ComplianceChecker checker = new ComplianceChecker();
 
     /** Special trace used as a marker to signal completion to consumers. */
-    private static final Trace POISON_PILL = new Trace("POISON");
+    private static final Trace POISON_PILL = new Trace("POISON", "POISON");
 
     /** Total time spent checking traces (nanoseconds). */
     private long totalCheckTime;
