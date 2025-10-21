@@ -3,8 +3,8 @@ package nl.rug.ap.a1.observer;
 import java.lang.System;
 import lombok.NoArgsConstructor;
 import nl.rug.ap.a1.userInterface.ConsoleColor;
-import nl.rug.ap.a1.traces.Trace;
-import nl.rug.ap.a1.traces.TraceStatus;
+import nl.rug.ap.a1.cases.Trace;
+import nl.rug.ap.a1.cases.TraceStatus;
 
 /**
  * Tracks and reports the progress of trace processing.

@@ -1,7 +1,7 @@
 package nl.rug.ap.a1;
 
-import nl.rug.ap.a1.parsing.DataLoader;
-import nl.rug.ap.a1.traces.Trace;
+import nl.rug.ap.a1.resourceParsing.DataLoader;
+import nl.rug.ap.a1.cases.Trace;
 import org.junit.jupiter.api.*;
 
 import java.util.HashMap;

@@ -1,11 +1,21 @@
 package nl.rug.ap.a1.strategy;
 
-import nl.rug.ap.a1.traces.Event;
-import nl.rug.ap.a1.traces.Trace;
-import nl.rug.ap.a1.traces.TraceStatus;
+import nl.rug.ap.a1.cases.Event;
+import nl.rug.ap.a1.cases.Trace;
+import nl.rug.ap.a1.cases.TraceStatus;
 
 import java.util.List;
 
+/**
+ * Checks the compliance of a {@link Trace} by analyzing its {@link Event} sequence.
+ * <p>
+ * The compliance check consists of:
+ * <ul>
+ *     <li>Detecting unknown events that prevent a trace from being classified.</li>
+ *     <li>Checking payment cycles to ensure invoices are properly recorded and cleared.</li>
+ *     <li>Checking payment blocks to ensure no block violations occur.</li>
+ * </ul>
+ */
 public class GeneralRulesCheck implements ComplianceStrategy {
 
     /** List of events considered unknown and preventing classification of a trace. */
@@ -48,16 +58,9 @@ public class GeneralRulesCheck implements ComplianceStrategy {
     private boolean checkPaymentCycles(Trace t) {
         int counter = 0;
         for (Event e : t.getEvents()) {
-            switch (e.getActivity()){
-                case "Record Invoice Receipt":
-                case "Record Service Entry Sheet":
-                    counter++;
-                    break;
-                case "Clear Invoice":
-                case "Cancel Invoice Receipt":
-                    counter--;
-                    break;
-            }
+            if (e.getActivity().equals("Record Invoice Receipt")) counter++;
+            if (e.getActivity().equals("Clear Invoice")) counter--;
+            if (e.getActivity().equals("Cancel Invoice Receipt")) counter--;
             if (counter < 0) return false; // Clear before Record
         }
         return counter == 0; // All records cleared

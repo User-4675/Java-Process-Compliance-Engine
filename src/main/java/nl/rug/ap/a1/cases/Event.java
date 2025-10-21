@@ -1,4 +1,4 @@
-package nl.rug.ap.a1.traces;
+package nl.rug.ap.a1.cases;
 
 import lombok.Getter;
 import java.time.LocalDateTime;

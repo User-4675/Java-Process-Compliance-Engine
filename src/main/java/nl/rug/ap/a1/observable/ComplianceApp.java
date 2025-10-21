@@ -2,7 +2,7 @@ package nl.rug.ap.a1.observable;
 
 import lombok.NoArgsConstructor;
 import nl.rug.ap.a1.strategy.ComplianceManager;
-import nl.rug.ap.a1.traces.Trace;
+import nl.rug.ap.a1.cases.Trace;
 import nl.rug.ap.a1.observer.ProgressObserver;
 
 import java.util.ArrayList;

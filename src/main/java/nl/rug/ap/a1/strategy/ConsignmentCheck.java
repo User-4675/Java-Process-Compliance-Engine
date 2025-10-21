@@ -1,8 +1,12 @@
 package nl.rug.ap.a1.strategy;
 
-import nl.rug.ap.a1.traces.Trace;
-import nl.rug.ap.a1.traces.TraceStatus;
+import nl.rug.ap.a1.cases.Trace;
+import nl.rug.ap.a1.cases.TraceStatus;
 
+
+/**
+ * Marks containment cases as UNKNOWN.
+ */
 public class ConsignmentCheck implements ComplianceStrategy {
 
     @Override

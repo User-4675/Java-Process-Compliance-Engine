@@ -1,4 +1,4 @@
-package nl.rug.ap.a1.traces;
+package nl.rug.ap.a1.cases;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,9 +31,11 @@ public class Trace {
 
     /**
      * Constructs a new {@code Trace} with the given identifier.
-     * The initial status is set to {@link TraceStatus#UNKNOWN}.
+     * The initial status is set to {@link TraceStatus#UNKNOWN} and
+     * initial its type to {@link TraceType}.
      *
      * @param id the unique identifier for the trace
+     * @param traceType the type of trace
      */
     public Trace(String id, String traceType) {
         this.id = id;
