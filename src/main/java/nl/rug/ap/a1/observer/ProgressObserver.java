@@ -1,6 +1,6 @@
 package nl.rug.ap.a1.observer;
 
-import nl.rug.ap.a1.Trace;
+import nl.rug.ap.a1.traces.Trace;
 
 /**
  * Observer interface for monitoring the progress of trace processing.

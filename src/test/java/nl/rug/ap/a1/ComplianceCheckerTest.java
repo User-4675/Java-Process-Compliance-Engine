@@ -1,18 +1,19 @@
 package nl.rug.ap.a1;
 
+import nl.rug.ap.a1.strategy.ComplianceManager;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ComplianceCheckerTest {
 
-    private ComplianceChecker checker;
+    private ComplianceManager checker;
 
     @BeforeAll
     static void start(){System.out.println("Testing Compliance checker...");}
 
     @BeforeEach
-    void setUp() {checker = new ComplianceChecker();}
+    void setUp() {checker = new ComplianceManager();}
 
 //    @Test
 //    void testUnknownEventKeepsStatusUnknown() {

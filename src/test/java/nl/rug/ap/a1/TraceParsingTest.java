@@ -1,12 +1,9 @@
 package nl.rug.ap.a1;
 
+import nl.rug.ap.a1.traces.Trace;
 import org.junit.jupiter.api.*;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TraceParsingTest {
 

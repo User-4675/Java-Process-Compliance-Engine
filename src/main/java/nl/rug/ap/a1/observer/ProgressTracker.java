@@ -2,9 +2,9 @@ package nl.rug.ap.a1.observer;
 
 import java.lang.System;
 import lombok.NoArgsConstructor;
-import nl.rug.ap.a1.ConsoleColor;
-import nl.rug.ap.a1.Trace;
-import nl.rug.ap.a1.TraceStatus;
+import nl.rug.ap.a1.userInterface.ConsoleColor;
+import nl.rug.ap.a1.traces.Trace;
+import nl.rug.ap.a1.traces.TraceStatus;
 
 /**
  * Tracks and reports the progress of trace processing.

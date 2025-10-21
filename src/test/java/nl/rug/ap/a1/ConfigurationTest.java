@@ -1,5 +1,6 @@
 package nl.rug.ap.a1;
 
+import nl.rug.ap.a1.userInterface.Configuration;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;

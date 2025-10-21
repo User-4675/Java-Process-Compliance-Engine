@@ -1,6 +1,9 @@
-package nl.rug.ap.a1;
+package nl.rug.ap.a1.parsing;
 
 import lombok.NoArgsConstructor;
+import nl.rug.ap.a1.traces.Event;
+import nl.rug.ap.a1.Main;
+import nl.rug.ap.a1.traces.Trace;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 

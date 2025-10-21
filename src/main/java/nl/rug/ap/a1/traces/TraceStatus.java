@@ -1,4 +1,4 @@
-package nl.rug.ap.a1;
+package nl.rug.ap.a1.traces;
 
 /**
  * Represents the status of a {@link Trace}.
