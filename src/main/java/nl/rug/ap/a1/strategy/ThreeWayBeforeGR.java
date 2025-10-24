@@ -103,21 +103,20 @@ public class ThreeWayBeforeGR implements ComplianceStrategy{
      * @return true if trace complies with above-mentioned rule, else false
      */
     public boolean condition3(Trace t){
-        int count = 0;
-        boolean cleared = false;
+        boolean cleared = false, removed = false;
         for (Event e : t.getEvents()){
             switch (e.getActivity()){
                 case "Record Goods Receipt":
                 case "Record Service Entry Sheet":
                 case "Remove Payment Block":
-                    count++;
+                    removed = true;
                     break;
                 case "Clear Invoice":
+                    if (!removed) return false;
+                    removed = false;
                     cleared = true;
-                    count = 0;
             }
-            if (cleared && count > 0 ) return false;
         }
-        return cleared & count == 0;
+        return cleared;
     }
 }

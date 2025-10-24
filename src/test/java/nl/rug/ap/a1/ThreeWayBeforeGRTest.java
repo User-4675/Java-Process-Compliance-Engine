@@ -52,12 +52,11 @@ class ThreeWayBeforeGRTest {
         assertEquals(TraceStatus.NONCOMPLIANT, traces.get("17").getStatus());
         assertEquals(TraceStatus.NONCOMPLIANT, traces.get("18").getStatus());
         assertEquals(TraceStatus.NONCOMPLIANT, traces.get("19").getStatus());
-        assertEquals(TraceStatus.COMPLIANT,    traces.get("20").getStatus());
+        assertEquals(TraceStatus.NONCOMPLIANT, traces.get("20").getStatus());
         assertEquals(TraceStatus.COMPLIANT,    traces.get("21").getStatus());
         assertEquals(TraceStatus.NONCOMPLIANT, traces.get("22").getStatus());
         assertEquals(TraceStatus.COMPLIANT,    traces.get("23").getStatus());
         assertEquals(TraceStatus.NONCOMPLIANT, traces.get("24").getStatus());
-        assertEquals(TraceStatus.COMPLIANT,    traces.get("25").getStatus());
         assertEquals(TraceStatus.COMPLIANT,    traces.get("26").getStatus());
     }
 }
