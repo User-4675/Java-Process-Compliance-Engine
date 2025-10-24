@@ -87,4 +87,11 @@ public class ProgressTracker implements ProgressObserver {
         System.out.printf("Average case processing time: %.3f ns\n", avgCheckTime);
         System.out.println(ConsoleColor.GREEN + "-".repeat(71) + ConsoleColor.RESET);
     }
+
+    public void reset(){
+        this.processed = 0;
+        this.compliant = 0;
+        this.nonCompliant = 0;
+        this.unknown = 0;
+    }
 }

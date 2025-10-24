@@ -1,0 +1,22 @@
+"case concept:name","event concept:name","event time:timestamp","case Item Category"
+"1","Record Invoice Receipt","07-10-2025 09:00:00.000","2-way match"
+"1","Clear Invoice","07-10-2025 09:05:00.000","2-way match"
+
+"2","Record Invoice Receipt","07-10-2025 09:10:00.000","2-way match"
+"2","Record Goods Receipt","07-10-2025 09:15:00.000","2-way match"
+"2","Clear Invoice","07-10-2025 09:20:00.000","2-way match"
+
+"3","Clear Invoice","07-10-2025 09:30:00.000","2-way match"
+
+"4","Record Invoice Receipt","07-10-2025 09:40:00.000","2-way match"
+"4","Record Invoice Receipt","07-10-2025 09:45:00.000","2-way match"
+"4","Clear Invoice","07-10-2025 09:50:00.000","2-way match"
+
+"5","Change Price","07-10-2025 10:00:00.000","2-way match"
+"5","Record Invoice Receipt","07-10-2025 10:05:00.000","2-way match"
+"5","Cancel Invoice Receipt","07-10-2025 10:06:00.000","2-way match"
+"5","Clear Invoice","07-10-2025 10:10:00.000","2-way match"
+
+"6","Record Invoice Receipt","07-10-2025 10:15:00.000","2-way match"
+"6","Record Service Entry Sheet","07-10-2025 10:20:00.000","2-way match"
+"6","Clear Invoice","07-10-2025 10:25:00.000","2-way match"

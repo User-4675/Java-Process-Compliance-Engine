@@ -61,7 +61,7 @@ public class Main {
         File[] files = folder.listFiles((dir, name) -> name.endsWith(".csv"));
         if (files != null){
             for (File file : files){
-                System.out.println("Processing file: " + file.getName());
+                System.out.println("\nProcessing file: " + file.getName());
 
                 /* Start new process for each file */
                 boolean success = loader.load(traceMap, file.getPath());
@@ -74,8 +74,9 @@ public class Main {
                 success =  reportGenerator.generateReport(traceMap, file.getName());
                 if (!success) System.out.println("Failed to generate the report for " + file.getName());
 
-                /* Clear hash map after done */
+                /* Clear hash map and reset stats after done */
                 traceMap.clear();
+                tracker.reset();
             }
         }
     }

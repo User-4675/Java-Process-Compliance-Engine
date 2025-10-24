@@ -20,7 +20,7 @@ class DataLoaderTest {
     void setUp(){
         traces = new HashMap<>();
         DataLoader loader = new DataLoader();
-        boolean ok = loader.load(traces, "testDatabase.csv");
+        boolean ok = loader.load(traces, "src/test/resources/testDatabase.csv");
         assertTrue(ok, "Loader return true for existing CSV");
         assertFalse(traces.isEmpty(), "No traces loaded");
     }

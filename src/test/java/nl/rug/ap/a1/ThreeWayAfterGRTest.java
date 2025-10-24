@@ -23,7 +23,7 @@ class ThreeWayAfterGRTest {
         traces = new HashMap<>();
 
         DataLoader loader = new DataLoader();
-        boolean ok = loader.load(traces, "testDatabase-ThreeWayAfter.csv");
+        boolean ok = loader.load(traces, "src/test/resources/testDatabase-ThreeWayAfter.csv");
         assertTrue(ok, "Failed to load");
     }
 

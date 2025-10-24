@@ -1,0 +1,17 @@
+"case concept:name","event concept:name","event time:timestamp","case Item Category"
+"1","Record Invoice Receipt","01-10-2025 08:00:00.000","2-way match"
+"1","Clear Invoice","01-10-2025 08:05:00.000","2-way match"
+"1","Set Payment Block","01-10-2025 08:10:00.000","2-way match"
+"1","Remove Payment Block","01-10-2025 08:15:00.000","2-way match"
+
+"2","Record Invoice Receipt","01-10-2025 09:00:00.000","3-way match, invoice before GR"
+"2","Record Goods Receipt","01-10-2025 09:05:00.000","3-way match, invoice before GR"
+"2","Clear Invoice","01-10-2025 09:10:00.000","3-way match, invoice before GR"
+
+"3","Record Goods Receipt","01-10-2025 10:00:00.000","3-way match, invoice after GR"
+"3","Record Invoice Receipt","01-10-2025 10:05:00.000","3-way match, invoice after GR"
+"3","Clear Invoice","01-10-2025 10:10:00.000","3-way match, invoice after GR"
+
+"4","Change Price","01-10-2025 11:00:00.000","Consignment"
+"4","Record Invoice Receipt","01-10-2025 11:05:00.000","Consignment"
+"4","Clear Invoice","01-10-2025 11:10:00.000","Consignment"
