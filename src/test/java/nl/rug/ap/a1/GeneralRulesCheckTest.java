@@ -4,14 +4,18 @@ import nl.rug.ap.a1.cases.Event;
 import nl.rug.ap.a1.cases.Trace;
 import nl.rug.ap.a1.cases.TraceStatus;
 import nl.rug.ap.a1.strategy.GeneralRulesCheck;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GeneralRulesCheckTest {
 
     private GeneralRulesCheck strategy;
+
+    @BeforeAll
+    static void start() {
+        System.out.println("Testing GeneralRulesCheck...");
+    }
 
     @BeforeEach
     void setup() {
@@ -94,5 +98,15 @@ class GeneralRulesCheckTest {
         Trace bad = traceOf("Record Invoice Receipt");
         strategy.check(bad);
         assertEquals(TraceStatus.NONCOMPLIANT, bad.getStatus());
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.out.println("Test completed.");
+    }
+
+    @AfterAll
+    static void end() {
+        System.out.println("GeneralRulesCheck passed all tests !");
     }
 }

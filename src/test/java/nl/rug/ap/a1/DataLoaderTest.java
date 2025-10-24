@@ -14,7 +14,7 @@ class DataLoaderTest {
     private Map<String, Trace> traces;
 
     @BeforeAll
-    static void start(){ System.out.println("Testing Data Loader..."); }
+    static void start(){ System.out.println("Testing DataLoader..."); }
 
     @BeforeEach
     void setUp(){

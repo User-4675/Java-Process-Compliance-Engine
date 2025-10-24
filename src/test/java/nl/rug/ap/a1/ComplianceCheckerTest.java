@@ -14,7 +14,7 @@ class ComplianceCheckerTest {
 
     @BeforeAll
     static void start() {
-        System.out.println("Testing Compliance checker...");
+        System.out.println("Testing ComplianceChecker...");
     }
 
     @BeforeEach

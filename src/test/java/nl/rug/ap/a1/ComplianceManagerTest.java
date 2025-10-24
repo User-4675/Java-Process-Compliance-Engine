@@ -5,14 +5,18 @@ import nl.rug.ap.a1.cases.Trace;
 import nl.rug.ap.a1.cases.TraceStatus;
 import nl.rug.ap.a1.cases.TraceType;
 import nl.rug.ap.a1.strategy.ComplianceManager;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ComplianceManagerTest {
 
     private ComplianceManager manager;
+
+    @BeforeAll
+    static void start() {
+        System.out.println("Testing ComplianceManager...");
+    }
 
     @BeforeEach
     void setup() {
@@ -92,5 +96,15 @@ class ComplianceManagerTest {
         manager.check(t);
         // empty trace = counter==0 = COMPLIANT
         assertTrue(t.getStatus() == TraceStatus.COMPLIANT || t.getStatus() == TraceStatus.UNKNOWN);
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.out.println("Test completed.");
+    }
+
+    @AfterAll
+    static void end() {
+        System.out.println("ComplianceManager passed all tests !");
     }
 }

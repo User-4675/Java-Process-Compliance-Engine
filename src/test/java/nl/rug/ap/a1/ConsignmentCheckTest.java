@@ -3,11 +3,19 @@ package nl.rug.ap.a1;
 import nl.rug.ap.a1.cases.Trace;
 import nl.rug.ap.a1.cases.TraceStatus;
 import nl.rug.ap.a1.strategy.ConsignmentCheck;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ConsignmentCheckTest {
+
+    @BeforeAll
+    static void start() {
+        System.out.println("Testing ConsignmentCheck...");
+    }
 
     @Test
     void check_setsStatusUnknown() {
@@ -27,5 +35,15 @@ class ConsignmentCheckTest {
 
         assertTrue(strategy.isCompliant(trace),
                 "isCompliant should always return true");
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.out.println("Test completed.");
+    }
+
+    @AfterAll
+    static void end() {
+        System.out.println("ConsignmentCheck passed all tests !");
     }
 }

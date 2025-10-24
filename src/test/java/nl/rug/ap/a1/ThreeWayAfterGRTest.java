@@ -4,8 +4,7 @@ import nl.rug.ap.a1.cases.Trace;
 import nl.rug.ap.a1.cases.TraceStatus;
 import nl.rug.ap.a1.resourceParsing.DataLoader;
 import nl.rug.ap.a1.strategy.ThreeWayAfterGR;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +16,11 @@ class ThreeWayAfterGRTest {
     private ThreeWayAfterGR strategy;
     private Map<String, Trace> traces;
 
+    @BeforeAll
+    static void start() {
+        System.out.println("Testing ThreeWayAfterGR...");
+    }
+    
     @BeforeEach
     void setUp() {
         strategy = new ThreeWayAfterGR();
@@ -41,5 +45,15 @@ class ThreeWayAfterGRTest {
         assertEquals(TraceStatus.COMPLIANT,    traces.get("6").getStatus(), "6 should be compliant");
         assertEquals(TraceStatus.NONCOMPLIANT, traces.get("7").getStatus(), "7 should be noncompliant");
         assertEquals(TraceStatus.NONCOMPLIANT, traces.get("8").getStatus(), "8 should be noncompliant");
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.out.println("Test completed.");
+    }
+
+    @AfterAll
+    static void end() {
+        System.out.println("ThreeWayAfterGR passed all tests !");
     }
 }

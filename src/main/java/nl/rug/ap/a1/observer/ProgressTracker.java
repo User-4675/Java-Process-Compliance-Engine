@@ -88,6 +88,9 @@ public class ProgressTracker implements ProgressObserver {
         System.out.println(ConsoleColor.GREEN + "-".repeat(71) + ConsoleColor.RESET);
     }
 
+    /**
+     * Resets the tracker statistics.
+     */
     public void reset(){
         this.processed = 0;
         this.compliant = 0;
