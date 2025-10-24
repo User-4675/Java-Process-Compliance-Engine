@@ -2,15 +2,11 @@ package nl.rug.ap.a1.resourceParsing;
 
 import lombok.NoArgsConstructor;
 import nl.rug.ap.a1.cases.Event;
-import nl.rug.ap.a1.Main;
 import nl.rug.ap.a1.cases.Trace;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -32,16 +28,10 @@ public class DataLoader {
      * their case ID.
      *
      * @param traceMap the map to populate with trace objects, keyed by case ID
-     * @param fileName the name of the CSV file to load
+     * @param filePath path to file
      * @return {@code true} if the file was successfully loaded; {@code false} otherwise
      */
-    public boolean load(Map<String, Trace> traceMap, String fileName) {
-        // Reads CSV file as a stream of raw bytes
-        InputStream stream = Main.class.getClassLoader().getResourceAsStream(fileName);
-        if (stream == null) {
-            System.out.println("Resource not found");
-            return false;
-        }
+    public boolean load(Map<String, Trace> traceMap, String filePath) {
 
         // Start animation thread (separate from main loading to simulate progress)
         final boolean[] loadingDone = {false};
@@ -61,8 +51,8 @@ public class DataLoader {
         });
         dotThread.start();
 
-        // Converts raw bytes into readable text
-        try (Reader in = new InputStreamReader(stream, StandardCharsets.ISO_8859_1)) {
+        // Convert the file into Readable stream
+        try (Reader in = new InputStreamReader(new FileInputStream(filePath), StandardCharsets.ISO_8859_1)) {
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
                     .withFirstRecordAsHeader()
                     .parse(in);
@@ -72,7 +62,6 @@ public class DataLoader {
                 String activity = record.get("event concept:name");
                 String timestamp = record.get("event time:timestamp");
                 String itemCategory = record.get("case Item Category");
-                // System.out.println(itemCategory);
 
                 traceMap.computeIfAbsent(caseId, id -> new Trace(id, itemCategory))
                         .addEvent(new Event(activity, timestamp));
