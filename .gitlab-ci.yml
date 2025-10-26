@@ -4,6 +4,7 @@ stages:
   - checkstyle
   - build
   - test
+  - conformance
 cache:
   key: "m2-cache"
   paths:
