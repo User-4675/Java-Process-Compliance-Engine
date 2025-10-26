@@ -9,6 +9,17 @@ cache:
   key: "m2-cache"
   paths:
     - .m2/repository
+
+build:
+  stage: build
+  script:
+    - mvn -DskipTests package
+  artifacts:
+    paths:
+      - "target/*.jar"
+  rules:
+    - when: always
+
 checkstyle:
   stage: checkstyle
   rules:
@@ -22,13 +33,6 @@ checkstyle:
     paths:
       - "target/checkstyle-result.xml"
 
-build:
-  stage: build
-  script:
-    - mvn -DskipTests package
-  artifacts:
-    paths:
-      - "target/*.jar"
 test:
   stage: test
   needs:
