@@ -13,7 +13,7 @@ import nl.rug.ap.a1.cases.TraceStatus;
  *     <li> After the ‘Record Goods Receipt’ occurs, a ‘Remove Payment Block’ event
  *          should happen before the invoice can be cleared.
  *     <li> The ‘Clear Invoice’ event must occur after both the ‘Record Goods Receipt’
- *          and the ‘Remove Payment Block’ events. 
+ *          and the ‘Remove Payment Block’ events.
  * </ul>
  */
 public class ThreeWayBeforeGR implements ComplianceStrategy{
