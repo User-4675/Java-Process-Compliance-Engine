@@ -81,7 +81,7 @@ public class GeneralRulesCheck implements ComplianceStrategy {
             if (e.getActivity().equals("Set Payment Block")) counter++;
             if (e.getActivity().equals("Remove Payment Block")) counter--;
             if (e.getActivity().equals("Clear Invoice") && counter != 0) return false;
-            if (counter < 0) return false; // Block removed before being set
+            if (counter < 0) return false; // Block removed before being set 
         }
         return counter == 0; // All blocks properly opened and closed
     }
