@@ -12,7 +12,8 @@ import java.util.Map;
  * Class responsible for generating CSV reports for compliance traces.
  * <p>
  * Each report contains the following columns: Case ID, Case Type, and Status.
- * The report is stored in a dedicated <code>reports/</code> folder relative to the project root.
+ * The report is stored in a dedicated <code>reports/</code> folder relative
+ * to the project root.
  * If the folder does not exist, it will be created automatically.
  */
 @NoArgsConstructor
@@ -21,13 +22,15 @@ public class ReportGenerator {
     /**
      * Generates a CSV report from a map of {@link Trace} objects.
      * <p>
-     * The report file will be created in the <code>reports/</code> directory, and its name
-     * is derived from the provided CSV file name by replacing the <code>.csv</code> extension
-     * with <code>_report.csv</code>.
+     * The report file will be created in the <code>reports/</code> directory,
+     * and its name is derived from the provided CSV file name by replacing
+     * the <code>.csv</code> extension with <code>_report.csv</code>.
      * <p>
-     * Each trace in the map corresponds to a row in the CSV, including the trace's ID, type, and compliance status.
+     * Each trace in the map corresponds to a row in the CSV, including the
+     * trace's ID, type, and compliance status.
      *
-     * @param traceMap a map of {@link Trace} objects to be included in the report, keyed by their case ID
+     * @param traceMap a map of {@link Trace} objects to be included in the report,
+     *              keyed by their case ID
      * @param fileName the original CSV file name; used to derive the report file name
      * @return {@code true} if the report was successfully generated; {@code false} if
      *         the reports folder could not be created or an I/O error occurred
