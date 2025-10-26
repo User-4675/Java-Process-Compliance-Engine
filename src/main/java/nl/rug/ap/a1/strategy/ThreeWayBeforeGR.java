@@ -100,7 +100,7 @@ public class ThreeWayBeforeGR implements ComplianceStrategy{
      * The ‘Clear Invoice’ event must occur after both the ‘Record Goods Receipt’
      * and the ‘Remove Payment Block’ events.
      * @param t trace to check
-     * @return true if trace complies with above-mentioned rule, else false
+     * @return true if trace complies with above-mentioned rule, else false  
      */
     public boolean condition3(Trace t){
         boolean cleared = false, removed = false;
