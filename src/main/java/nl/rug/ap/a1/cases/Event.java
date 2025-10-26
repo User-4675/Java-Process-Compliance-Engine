@@ -29,7 +29,7 @@ public class Event {
      *                  (e.g., "03-10-2025 18:30:15.123")
      * @throws java.time.format.DateTimeParseException if the timestamp is not in the expected format
      */
-    public Event(String activity, String timestamp){
+    public Event(final String activity, final String timestamp){
         this.activity = activity;
         this.timestamp = timestamp;
         this.parsedTime = LocalDateTime.parse(timestamp,

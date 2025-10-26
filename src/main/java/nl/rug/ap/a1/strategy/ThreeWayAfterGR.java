@@ -22,7 +22,7 @@ public class ThreeWayAfterGR implements ComplianceStrategy{
 
     @Override
     public boolean isCompliant(Trace trace) {
-        int count_goods = 0, count_inv = 0;
+        int countGoods = 0, countInv = 0;
         boolean isCleared = false;
 
         for (Event e : trace.getEvents()) {
@@ -31,35 +31,35 @@ public class ThreeWayAfterGR implements ComplianceStrategy{
             switch (activity) {
                 case "Record Goods Receipt":
                 case "Record Service Entry Sheet":
-                    count_goods++;
+                    countGoods++;
                     break;
 
                 case "Cancel Goods Receipt":
-                    if (count_goods > 0) count_goods--;
+                    if (countGoods > 0) countGoods--;
                     else return false;
                     break;
 
                 case "Record Invoice Receipt":
                     // invoice must come after at least one GR
-                    if (count_goods <= count_inv) return false;
-                    count_inv++;
+                    if (countGoods <= countInv) return false;
+                    countInv++;
                     break;
 
                 case "Cancel Invoice Receipt":
                     // Clearing Non-existent Invoice is covered by general check
-                    count_inv--;
+                    countInv--;
                     break;
 
                 case "Clear Invoice":
                     // clearing requires both GR and IR before it
-                    if (count_goods == 0 || count_inv == 0) return false;
+                    if (countGoods == 0 || countInv == 0) return false;
                     isCleared = true;
                     // simulate clearing the cycle
-                    count_goods--;
-                    count_inv--;
+                    countGoods--;
+                    countInv--;
                     break;
             }
         }
-        return count_goods == 0 && count_inv == 0 && isCleared;
+        return countGoods == 0 && countInv == 0 && isCleared;
     }
 }

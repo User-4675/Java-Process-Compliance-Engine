@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+<suppressions>
+    <suppress checks="LineLength"/>
+    <suppress checks="NeedBraces"/>
+    <suppress checks="Whitespace.*"/>
+    <suppress checks="EmptyLineSeparator"/>
+    <suppress checks="JavadocPackage"/>
+    <suppress checks="RegexpSingleline"/>
+    <suppress checks="AvoidStarImport"/>
+    <suppress checks="HiddenField"/>
+</suppressions>

@@ -1,15 +1,31 @@
 image: maven:3.9.9-eclipse-temurin-17
 
 stages:
+  - checkstyle
   - build
   - test
-  - conformance
 cache:
   key: "m2-cache"
   paths:
     - .m2/repository
+checkstyle:
+  stage: checkstyle
+  rules:
+    - changes:
+        - "pom.xml"
+        - "src/**/*"
+  script:
+    - mvn -Dmaven.test.skip=true checkstyle:check
+  artifacts:
+    when: always
+    paths:
+      - "target/checkstyle-result.xml"
 build:
   stage: build
+  rules:
+    - changes:
+        - "pom.xml"
+        - "src/**/*"
   script:
     - mvn -DskipTests package
   artifacts:
@@ -55,3 +71,7 @@ conformance_check:
             java -jar "$jar_file" "$filename"
       done < changed_files.txt
     - rm changed_files.txt
+  artifacts:
+    when: always
+    paths:
+      - reports/

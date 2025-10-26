@@ -1,6 +1,5 @@
 package nl.rug.ap.a1.observer;
 
-import java.lang.System;
 import lombok.NoArgsConstructor;
 import nl.rug.ap.a1.userInterface.ConsoleColor;
 import nl.rug.ap.a1.cases.Trace;
@@ -28,13 +27,28 @@ public class ProgressTracker implements ProgressObserver {
     /** Number of traces with unknown status. */
     private int unknown = 0;
 
+    /** Number of dashes1.*/
+    private final int dashes1 = 25;
+
+    /** Number of dashes2.*/
+    private final int dashes2 = 71;
+
+    /** Number of spaces. */
+    private final int spaces = 80;
+
+    /** Number of bytes.*/
+    private final double bytes = 1024.0;
+
+    /** Number of ns in seconds. */
+    private final double nstoseconds = 1_000_000_000.0;
+
     /**
      * Updates progress counters after processing a trace.
      *
      * @param t the {@link Trace} that was processed
      */
     @Override
-    public synchronized void updateProgress(Trace t) {
+    public synchronized void updateProgress(final Trace t) {
         processed++;
         if (t.getStatus() == TraceStatus.UNKNOWN) unknown++;
         else if (t.getStatus() == TraceStatus.COMPLIANT) compliant++;
@@ -67,25 +81,25 @@ public class ProgressTracker implements ProgressObserver {
      * @param maxMemoryUsed  maximum memory used in bytes
      */
     @Override
-    public void reportFinalProgress(long start, long end, long totalCheckTime, long maxMemoryUsed) {
-        System.out.print("\r" + " ".repeat(80) + "\r"); // Clear line
+    public void reportFinalProgress(final long start, final long end, final long totalCheckTime, final long maxMemoryUsed) {
+        System.out.print("\r" + " ".repeat(spaces) + "\r"); // Clear line
         System.out.println(
-                ConsoleColor.GREEN + "-".repeat(25) + "[ALL CASES PROCESSED]"
-                        + "-".repeat(25) + ConsoleColor.RESET);
+                ConsoleColor.GREEN + "-".repeat(dashes1) + "[ALL CASES PROCESSED]"
+                        + "-".repeat(dashes1) + ConsoleColor.RESET);
         System.out.println(
                 ConsoleColor.BLUE + "Processed: " + ConsoleColor.RESET + processed
                         + ConsoleColor.GREEN + " Compliant: " + ConsoleColor.RESET + compliant
                         + ConsoleColor.RED + " Non-Compliant: " + ConsoleColor.RESET + nonCompliant
                         + ConsoleColor.YELLOW + " Unknown: " + ConsoleColor.RESET + unknown);
 
-        double maxMemory = maxMemoryUsed / (1024.0 * 1024.0); // MB
-        double totalAppRuntime = (end - start) / 1_000_000_000.0; // Seconds
+        double maxMemory = maxMemoryUsed / (bytes * bytes); // MB
+        double totalAppRuntime = (end - start) /nstoseconds; // Seconds
         double avgCheckTime = (processed > 0 ? (totalCheckTime / (double) processed) : 0); // ns
 
         System.out.printf("Max Consumed Memory: %.3f MB\n", maxMemory);
         System.out.printf("Total log processing time: %.3f s\n", totalAppRuntime);
         System.out.printf("Average case processing time: %.3f ns\n", avgCheckTime);
-        System.out.println(ConsoleColor.GREEN + "-".repeat(71) + ConsoleColor.RESET);
+        System.out.println(ConsoleColor.GREEN + "-".repeat(dashes2) + ConsoleColor.RESET);
     }
 
     /**

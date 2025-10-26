@@ -23,7 +23,7 @@ public class Trace {
     /** Current status of the trace. */
     private TraceStatus status;
 
-    /** Type of the trace */
+    /** Type of the trace. */
     private TraceType type;
 
     /** List of events associated with this trace. */
@@ -37,7 +37,7 @@ public class Trace {
      * @param id the unique identifier for the trace
      * @param traceType the type of trace
      */
-    public Trace(String id, String traceType) {
+    public Trace(final String id,final String traceType) {
         this.id = id;
         this.status = TraceStatus.UNKNOWN;
         if (traceType.equals("3-way match, invoice after GR")) this.type = TraceType.ThreeWayAfterGR;
@@ -52,7 +52,7 @@ public class Trace {
      *
      * @param e the event to add
      */
-    public void addEvent(Event e) {
+    public void addEvent(final Event e) {
         events.add(e);
     }
 

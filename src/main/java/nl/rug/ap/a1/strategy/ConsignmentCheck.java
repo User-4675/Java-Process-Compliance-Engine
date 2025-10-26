@@ -10,7 +10,7 @@ import nl.rug.ap.a1.cases.TraceStatus;
 public class ConsignmentCheck implements ComplianceStrategy {
 
     @Override
-    public void check(Trace trace) {
+    public void check(final Trace trace) {
         trace.setStatus(TraceStatus.UNKNOWN);
     }
 
