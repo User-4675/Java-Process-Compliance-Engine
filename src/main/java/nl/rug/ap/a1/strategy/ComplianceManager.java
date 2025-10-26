@@ -16,7 +16,7 @@ public class ComplianceManager {
     private final Map<TraceType, ComplianceStrategy> strategies;
 
     /** Contains general rules that every case needs to follow. */
-    private final GeneralRulesCheck general = new GeneralRulesCheck();
+    private GeneralRulesCheck general = new GeneralRulesCheck();
 
     /**
      * Constructs Manager.
