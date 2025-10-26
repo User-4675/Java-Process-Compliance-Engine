@@ -30,9 +30,16 @@ public class Configuration {
      * {@link #setShowLiveProgress()} to collect all required configuration.
      */
     public void getConfiguration(){
-        System.out.println("------ Configuration ------- ");
-        setThreads();
-        setShowLiveProgress();
+        if (System.console() == null) {
+            // Default settings for pipline
+            noOfThreads = 4;
+            showLiveProgress = false;
+        } else {
+            // Interactive mode
+            System.out.println("------ Configuration ------- ");
+            setThreads();
+            setShowLiveProgress();
+        }
     }
 
     /**

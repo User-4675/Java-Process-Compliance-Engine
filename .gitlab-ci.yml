@@ -56,3 +56,4 @@ conformance_check:
             filename=$(basename "$file")          # extract the name
             java -jar "$jar_file" "$filename"
       done < changed_files.txt
+    - rm changed_files.txt
