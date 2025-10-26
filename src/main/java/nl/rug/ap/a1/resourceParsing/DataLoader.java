@@ -18,6 +18,12 @@ import java.util.Map;
  */
 @NoArgsConstructor
 public class DataLoader {
+    /** Ms for thread sleep.*/
+    private static final int THREAD_SLEEP_MS = 300;
+
+
+    /**No of dots.*/
+    private static final int CSV_DOTS = 4;
 
     /**
      * Loads traces from a CSV file and populates the provided map.
@@ -31,19 +37,20 @@ public class DataLoader {
      * @param filePath path to file
      * @return {@code true} if the file was successfully loaded; {@code false} otherwise
      */
-    public boolean load(Map<String, Trace> traceMap, String filePath) {
+    public boolean load(final Map<String, Trace> traceMap,final String filePath) {
 
         // Start animation thread (separate from main loading to simulate progress)
         final boolean[] loadingDone = {false};
         Thread dotThread = new Thread(() -> {
             int dotCount = 0;
             while (!loadingDone[0]) {
-                String dots = ".".repeat(dotCount % 4);
+                String dots = ".".repeat(dotCount % CSV_DOTS);
                 System.out.print("\rFetching data from database" + dots + "   ");
                 System.out.flush();
                 dotCount++;
-                try { Thread.sleep(300); }
-                catch (InterruptedException e) {
+                try {
+                    Thread.sleep(THREAD_SLEEP_MS);
+                } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     break;
                 }

@@ -14,7 +14,7 @@ public interface ComplianceStrategy {
     void check(Trace trace);
 
     /**
-     * Checks for compliance of the trace
+     * Checks for compliance of the trace.
      * @param trace trace to check
      * @return true of compliant, else false
      */

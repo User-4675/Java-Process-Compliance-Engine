@@ -24,7 +24,7 @@ public class ThreeWayBeforeGR implements ComplianceStrategy{
     }
 
     @Override
-    public boolean isCompliant(Trace trace){
+    public boolean isCompliant(final Trace trace){
         return condition1(trace) && condition2(trace) && condition3(trace);
     }
 
@@ -35,8 +35,9 @@ public class ThreeWayBeforeGR implements ComplianceStrategy{
      * @param t trace to check
      * @return true if trace complies with above-mentioned rule, else false
      */
-    public boolean condition1(Trace t){
-        int countGoods = 0, countInv = 0;
+    public boolean condition1(final Trace t){
+        int countGoods = 0;
+        int countInv = 0;
         for (Event e : t.getEvents()) {
             switch (e.getActivity()) {
                 case "Record Invoice Receipt":
@@ -74,7 +75,7 @@ public class ThreeWayBeforeGR implements ComplianceStrategy{
      * @param t trace to check
      * @return true if trace complies with above-mentioned rule, else false
      */
-    public boolean condition2(Trace t){
+    public boolean condition2(final Trace t){
         int goods = 0;
         for (Event e : t.getEvents()){
             switch (e.getActivity()){
@@ -100,10 +101,11 @@ public class ThreeWayBeforeGR implements ComplianceStrategy{
      * The ‘Clear Invoice’ event must occur after both the ‘Record Goods Receipt’
      * and the ‘Remove Payment Block’ events.
      * @param t trace to check
-     * @return true if trace complies with above-mentioned rule, else false  
+     * @return true if trace complies with above-mentioned rule, else false
      */
-    public boolean condition3(Trace t){
-        boolean cleared = false, removed = false;
+    public boolean condition3(final Trace t){
+        boolean cleared = false;
+        boolean removed = false;
         for (Event e : t.getEvents()){
             switch (e.getActivity()){
                 case "Record Goods Receipt":

@@ -35,7 +35,7 @@ public class ReportGenerator {
      * @return {@code true} if the report was successfully generated; {@code false} if
      *         the reports folder could not be created or an I/O error occurred
      */
-    public boolean generateReport(Map <String, Trace> traceMap, String fileName){
+    public boolean generateReport(final Map <String, Trace> traceMap, final String fileName){
         boolean success = true;
         File reportsFolder = new File("reports");
         if (!reportsFolder.exists()) success = reportsFolder.mkdirs();
