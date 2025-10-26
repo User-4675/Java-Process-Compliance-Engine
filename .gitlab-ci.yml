@@ -57,5 +57,6 @@ conformance_check:
     # Run your program for each changed CSV
     - |
       while IFS= read -r file; do
-            java -jar "$jar_file" "$file"
+            filename=$(basename "$file")          # extract the name
+            java -jar "$jar_file" "$filename"
       done < changed_files.txt
