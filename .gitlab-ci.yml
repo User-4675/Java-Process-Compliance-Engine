@@ -38,7 +38,9 @@ test:
 # Conformance check job (runs only if .csv files changed)
 conformance_check:
   stage: conformance
-  needs: ["build"]
+  needs:
+    - job: build
+      optional: true
   rules:
     - changes:
         - "event_log/*.csv"
