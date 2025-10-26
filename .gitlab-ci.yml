@@ -42,7 +42,6 @@ test:
     paths:
       - target/surefire-reports/
 
-# Conformance check job (runs only if .csv files changed)
 conformance_check:
   stage: conformance
   needs: ["build"]

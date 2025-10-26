@@ -16,7 +16,7 @@ public class ComplianceManager {
     private final Map<TraceType, ComplianceStrategy> strategies;
 
     /** Contains general rules that every case needs to follow. */
-    private GeneralRulesCheck general = new GeneralRulesCheck();
+    private final GeneralRulesCheck general = new GeneralRulesCheck();
 
     /**
      * Constructs Manager.
@@ -42,6 +42,8 @@ public class ComplianceManager {
      * */
     public void check(final Trace trace){
         ComplianceStrategy strategy = strategies.get(trace.getType());
+        // Ensure that events are sorted
+        trace.sortEvents();
         // Check the general criteria first
         general.check(trace);
         // Test for other criteria iff trace passed general check

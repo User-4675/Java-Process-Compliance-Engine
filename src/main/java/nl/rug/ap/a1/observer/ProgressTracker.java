@@ -1,5 +1,6 @@
 package nl.rug.ap.a1.observer;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import nl.rug.ap.a1.userInterface.ConsoleColor;
 import nl.rug.ap.a1.cases.Trace;
@@ -13,6 +14,7 @@ import nl.rug.ap.a1.cases.TraceStatus;
  * Provides both intermediate and final reporting of progress and statistics.
  */
 @NoArgsConstructor
+@Getter
 public class ProgressTracker implements ProgressObserver {
 
     /** Number of traces processed so far. */
@@ -27,6 +29,15 @@ public class ProgressTracker implements ProgressObserver {
     /** Number of traces with unknown status. */
     private int unknown = 0;
 
+    /** Maximum memory consumed in Mega Bytes. */
+    private double maxMemoryMB;
+
+    /** Total runtime in seconds. */
+    private double totalRunTimeSec;
+
+    /** Average check time in nanoseconds. */
+    private double avgCheckTimeNs;
+
     /** Number of dashes1.*/
     private final int dashes1 = 25;
 
@@ -40,7 +51,7 @@ public class ProgressTracker implements ProgressObserver {
     private final double bytes = 1024.0;
 
     /** Number of ns in seconds. */
-    private final double nstoseconds = 1_000_000_000.0;
+    private final double nanoseconds = 1_000_000_000.0;
 
     /**
      * Updates progress counters after processing a trace.
@@ -92,23 +103,13 @@ public class ProgressTracker implements ProgressObserver {
                         + ConsoleColor.RED + " Non-Compliant: " + ConsoleColor.RESET + nonCompliant
                         + ConsoleColor.YELLOW + " Unknown: " + ConsoleColor.RESET + unknown);
 
-        double maxMemory = maxMemoryUsed / (bytes * bytes); // MB
-        double totalAppRuntime = (end - start) /nstoseconds; // Seconds
-        double avgCheckTime = (processed > 0 ? (totalCheckTime / (double) processed) : 0); // ns
+        this.maxMemoryMB = maxMemoryUsed / (bytes * bytes);
+        this.totalRunTimeSec = (end - start) / nanoseconds;
+        this.avgCheckTimeNs = (processed > 0 ? (totalCheckTime / (double) processed) : 0);
 
-        System.out.printf("Max Consumed Memory: %.3f MB\n", maxMemory);
-        System.out.printf("Total log processing time: %.3f s\n", totalAppRuntime);
-        System.out.printf("Average case processing time: %.3f ns\n", avgCheckTime);
+        System.out.printf("Max Consumed Memory: %.3f MB\n", this.maxMemoryMB);
+        System.out.printf("Total log processing time: %.3f s\n", this.totalRunTimeSec);
+        System.out.printf("Average case processing time: %.3f ns\n", this.avgCheckTimeNs);
         System.out.println(ConsoleColor.GREEN + "-".repeat(dashes2) + ConsoleColor.RESET);
-    }
-
-    /**
-     * Resets the tracker statistics.
-     */
-    public void reset(){
-        this.processed = 0;
-        this.compliant = 0;
-        this.nonCompliant = 0;
-        this.unknown = 0;
     }
 }

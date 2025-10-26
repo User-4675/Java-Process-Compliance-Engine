@@ -25,7 +25,7 @@ public class ComplianceApp implements Observable {
     private ProgressObserver observer;
 
     /** Checker that evaluates trace compliance. */
-    private ComplianceManager checker = new ComplianceManager();
+    private final ComplianceManager checker = new ComplianceManager();
 
     /** Special trace used as a marker to signal completion to consumers. */
     private static final Trace POISON_PILL = new Trace("POISON", "POISON");

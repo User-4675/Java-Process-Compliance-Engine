@@ -2,6 +2,7 @@ package nl.rug.ap.a1.reportHandle;
 
 import lombok.NoArgsConstructor;
 import nl.rug.ap.a1.cases.Trace;
+import nl.rug.ap.a1.observer.ProgressTracker;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -32,25 +33,38 @@ public class ReportGenerator {
      * @param traceMap a map of {@link Trace} objects to be included in the report,
      *              keyed by their case ID
      * @param fileName the original CSV file name; used to derive the report file name
+     * @param tracker process tracker
      * @return {@code true} if the report was successfully generated; {@code false} if
      *         the reports folder could not be created or an I/O error occurred
      */
-    public boolean generateReport(final Map <String, Trace> traceMap, final String fileName){
+    public boolean generateReport(final Map <String, Trace> traceMap, final String fileName, final ProgressTracker tracker){
         boolean success = true;
         File reportsFolder = new File("reports");
         if (!reportsFolder.exists()) success = reportsFolder.mkdirs();
         if (!success) return false;
 
+
         String reportPath = "reports/" + fileName.replace(".csv", "_report.csv");
         try (FileWriter writer = new FileWriter(reportPath)) {
             // Create a header
             writer.append("\"Case ID\", \"Case Type\", \"Status\"\n");
-
             for (Trace t : traceMap.values()) {
                 writer.write(String.format("\"%s\",\"%s\",\"%s\"\n",
                         t.getId(), t.getType(), t.getStatus()
                 ));
             }
+        } catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        String summaryPath = "reports/" + fileName.replace(".csv", "_summary.txt");
+        try (FileWriter writer = new FileWriter(summaryPath)) {
+            writer.write(String.format("Processed: %d Compliant: %d Non-compliant: %d Unknown: %d\n",
+                    tracker.getProcessed(), tracker.getCompliant(), tracker.getNonCompliant(), tracker.getUnknown()));
+            writer.write(String.format(
+                    "Max Consumed Memory: %.5fMB\nTotal log processing time: %.5fs\nAverage case processing time: %.3fns\n",
+                    tracker.getMaxMemoryMB(), tracker.getTotalRunTimeSec(), tracker.getTotalRunTimeSec()));
         } catch (IOException e){
             e.printStackTrace();
             return false;

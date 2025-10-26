@@ -77,7 +77,7 @@ public class Main {
         );
 
         /* Create a report */
-        success = reportGenerator.generateReport(traceMap, fileName);
+        success = reportGenerator.generateReport(traceMap, fileName, tracker);
         if (!success) System.out.println("Failed to generate the report for " + fileName);
     }
 }
