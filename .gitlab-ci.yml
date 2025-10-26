@@ -1,0 +1,46 @@
+image: maven:3.9.9-eclipse-temurin-17
+
+stages:
+  - checkstyle
+  - build
+  - test
+cache:
+  key: "m2-cache"
+  paths:
+    - .m2/repository
+checkstyle:
+  stage: checkstyle
+  rules:
+    - changes:
+        - "pom.xml"
+        - "src/**/*"
+  script:
+    - mvn -Dmaven.test.skip=true checkstyle:check
+  artifacts:
+    when: always
+    paths:
+      - "target/checkstyle-result.xml"
+build:
+  stage: build
+  rules:
+    - changes:
+        - "pom.xml"
+        - "src/**/*"
+  script:
+    - mvn -DskipTests package
+  artifacts:
+    paths:
+      - "target/*.jar"
+test:
+  stage: test
+  needs: ["build"]
+  rules:
+    - changes:
+        - "pom.xml"
+        - "src/**/*"
+  script:
+    - mvn test
+  artifacts:
+    when: always
+    paths:
+      - target/surefire-reports/
