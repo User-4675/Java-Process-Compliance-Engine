@@ -107,7 +107,7 @@ public class ComplianceApp implements Observable {
      * @param bQueue the queue to consume traces from
      * @param showProg Show progress
      */
-    private void processTraces(final BlockingQueue<Trace> bQueue,final boolean showProg) {
+    private void processTraces( BlockingQueue<Trace> bQueue,final boolean showProg) {
         try {
             while (true) {
                 Trace trace = bQueue.take();
