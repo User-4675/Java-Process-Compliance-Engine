@@ -49,18 +49,13 @@ conformance_check:
     - changes:
         - "event_log/*.csv"
   script:
-    # Detect newly added or changed CSVs
     - echo "Changed CSV files:"
     - git diff --name-only HEAD~1 HEAD -- "event_log/*.csv" > changed_files.txt
     - cat changed_files.txt
-
-    # If no changed files, exit gracefully
     - if [ ! -s changed_files.txt ]; then echo "No CSV changes detected."; exit 0; fi
 
-    # Find the jar file
     - jar_file=$(ls target/*-jar-with-dependencies.jar | head -n 1)
 
-    # Run your program for each changed CSV
     - |
       while IFS= read -r file; do
             filename=$(basename "$file")          # extract the name

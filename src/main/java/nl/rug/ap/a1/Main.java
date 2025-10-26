@@ -31,7 +31,7 @@ public class Main {
      *     <li>Loads traces into the map and runs the multithreaded evaluation</li>
      * </ul>
      *
-     * @param args command-line arguments (not used) 
+     * @param args command-line arguments (not used)
      */
     public static void main(final String[] args) {
 
