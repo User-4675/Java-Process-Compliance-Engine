@@ -20,23 +20,28 @@ This README provides instructions on how to compile and run the application, alo
 
        target/assignment1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
-2. Run the project using:
+   2. Run the project using:
 
-       java -jar target/assignment1-1.0-SNAPSHOT-jar-with-dependencies.jar
+          java -jar target/assignment1-1.0-SNAPSHOT-jar-with-dependencies.jar <file_name>
+    
+       `<file_name>` refers to the name of your CSV database. It needs to be located in `event_log/` folder
+       in the root of this project. The program will start and prompt you for the number of threads to use for 
+       processing traces as part of configuration. You will also be able to enable or disable live progress 
+       (Note that this will impact the performance). Program will store the results in `reports/` folder
+        in root of the project. It will include CSV file with status of each case and a text file with 
+        summary.
 
-   The program will start and prompt you for the number of threads to use for processing traces as
-   part of configuration. You will also be able to enable or disable live progress (Note that this will
-   impact the performance).
+    3. Open the Javadoc documentation.
+       After running Maven, the HTML documentation will be generated at:
+    
+           target/site/apidocs/index.html
+    
+       Open this file in a web browser to view the full project documentation, or run (on linux):
+    
+           xdg-open target/apidocs/index.html
 
-3. Open the Javadoc documentation.
-   After running Maven, the HTML documentation will be generated at:
-
-       target/site/apidocs/index.html
-
-   Open this file in a web browser to view the full project documentation, or run (on linux):
-
-       xdg-open target/apidocs/index.html
-
+Alternatively, user can upload CSV database to `event_log/` and commit to GitLab. Pipeline will take care of
+evaluating the database. The results will be stored as job artefacts on GitLab
 
 ## System Design
 
@@ -114,3 +119,8 @@ we have five check classes, that set the correct `TraceStatus` based on the `Eve
 folder in source root.
 
 ##### f) **CI Pipeline**
+The CI/CD pipeline is configured to automate the building, testing, style checking, and conformance evaluation of our Java application. 
+It includes separate jobs for Checkstyle, build, and test, ensuring code quality and correctness. The pipeline is designed to run incrementally: 
+the conformance check job only triggers when .csv event log files are added or modified, and it processes only those changed files. Each conformance 
+run generates a report, which is stored as a GitLab artifact for review. This setup reduces unnecessary computation, ensures up-to-date verification, 
+and provides clear visibility into the results of both code and data checks.
