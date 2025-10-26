@@ -1,5 +1,0 @@
-"Case ID", "Case Type", "Status"
-"1","TwoWayMatch","COMPLIANT"
-"2","ThreeWayBeforeGR","NONCOMPLIANT"
-"3","ThreeWayAfterGR","COMPLIANT"
-"4","Consignment","UNKNOWN"

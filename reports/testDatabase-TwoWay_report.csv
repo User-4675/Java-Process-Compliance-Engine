@@ -1,7 +1,0 @@
-"Case ID", "Case Type", "Status"
-"1","TwoWayMatch","COMPLIANT"
-"2","TwoWayMatch","NONCOMPLIANT"
-"3","TwoWayMatch","NONCOMPLIANT"
-"4","TwoWayMatch","NONCOMPLIANT"
-"5","TwoWayMatch","UNKNOWN"
-"6","TwoWayMatch","NONCOMPLIANT"

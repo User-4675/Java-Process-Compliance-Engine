@@ -23,11 +23,6 @@ checkstyle:
       - "target/checkstyle-result.xml"
 build:
   stage: build
-#  rules:
-#    - changes:
-#        - "pom.xml"
-#        - "src/**/*"
-
   script:
     - mvn -DskipTests package
   artifacts:
