@@ -29,7 +29,7 @@ public class Main {
      *     <li>Initializes {@link DataLoader} to load traces</li>
      *     <li>Sets up {@link ComplianceApp} and {@link ProgressTracker}</li>
      *     <li>Loads traces into the map and runs the multithreaded evaluation</li>
-     * </ul>
+     * </ul> 
      *
      * @param args command-line arguments (not used)
      */

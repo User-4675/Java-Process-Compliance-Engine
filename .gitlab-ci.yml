@@ -1,8 +1,8 @@
 image: maven:3.9.9-eclipse-temurin-17
 
 stages:
-  - checkstyle
   - build
+  - checkstyle
   - test
   - conformance
 cache:
@@ -21,7 +21,7 @@ checkstyle:
     when: always
     paths:
       - "target/checkstyle-result.xml"
-      
+
 build:
   stage: build
   script:
