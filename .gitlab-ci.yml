@@ -21,6 +21,7 @@ checkstyle:
     when: always
     paths:
       - "target/checkstyle-result.xml"
+      
 build:
   stage: build
   script:
@@ -30,7 +31,9 @@ build:
       - "target/*.jar"
 test:
   stage: test
-  needs: ["build"]
+  needs:
+    - job: build
+      optional: true
   rules:
     - changes:
         - "pom.xml"
@@ -44,7 +47,9 @@ test:
 
 conformance_check:
   stage: conformance
-  needs: ["build"]
+  needs:
+    - job: build
+      optional: true
   rules:
     - changes:
         - "event_log/*.csv"
