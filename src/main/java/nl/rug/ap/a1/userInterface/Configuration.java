@@ -14,6 +14,8 @@ import java.util.Scanner;
 @Getter
 public class Configuration {
 
+    /** Number of threads default. */
+    private static final int DEFAULT_THREAD_COUNT = 4;
     /** Scanner used to read input from the console. */
     private final Scanner scanner = new Scanner(System.in);
 
@@ -32,7 +34,7 @@ public class Configuration {
     public void getConfiguration(){
         if (System.console() == null) {
             // Default settings for pipline
-            noOfThreads = 4;
+            noOfThreads = DEFAULT_THREAD_COUNT;
             showLiveProgress = false;
         } else {
             // Interactive mode

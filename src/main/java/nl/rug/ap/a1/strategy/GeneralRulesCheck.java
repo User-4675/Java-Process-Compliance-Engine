@@ -24,13 +24,13 @@ public class GeneralRulesCheck implements ComplianceStrategy {
                     "Record Subsequent Invoice", "Vendor creates debit memo");
 
     @Override
-    public void check(Trace trace){
+    public void check(final Trace trace){
         if (containsUnknownEvent(trace)) trace.setStatus(TraceStatus.UNKNOWN);
         else trace.setStatus(isCompliant(trace) ? TraceStatus.COMPLIANT : TraceStatus.NONCOMPLIANT);
     }
 
     @Override
-    public boolean isCompliant(Trace trace){
+    public boolean isCompliant(final Trace trace){
         return (checkPaymentBlocks(trace) && checkPaymentCycles(trace));
     }
 
@@ -40,7 +40,7 @@ public class GeneralRulesCheck implements ComplianceStrategy {
      * @param t the trace to inspect
      * @return {@code true} if at least one event is unknown, {@code false} otherwise
      */
-    private boolean containsUnknownEvent(Trace t) {
+    private boolean containsUnknownEvent(final Trace t) {
         return t.getEvents().stream().anyMatch(
                 e -> unknownEvents.contains(e.getActivity())
         );
@@ -55,7 +55,7 @@ public class GeneralRulesCheck implements ComplianceStrategy {
      * @param t the trace to check
      * @return {@code true} if payment cycles are valid, {@code false} otherwise
      */
-    private boolean checkPaymentCycles(Trace t) {
+    private boolean checkPaymentCycles(final Trace t) {
         int counter = 0;
         for (Event e : t.getEvents()) {
             if (e.getActivity().equals("Record Invoice Receipt")) counter++;
@@ -75,7 +75,7 @@ public class GeneralRulesCheck implements ComplianceStrategy {
      * @param t the trace to check
      * @return {@code true} if payment blocks are valid, {@code false} otherwise
      */
-    private boolean checkPaymentBlocks(Trace t) {
+    private boolean checkPaymentBlocks(final Trace t) {
         int counter = 0;
         for (Event e : t.getEvents()) {
             if (e.getActivity().equals("Set Payment Block")) counter++;

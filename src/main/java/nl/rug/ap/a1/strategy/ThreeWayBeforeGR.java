@@ -19,7 +19,7 @@ import nl.rug.ap.a1.cases.TraceStatus;
 public class ThreeWayBeforeGR implements ComplianceStrategy{
 
     @Override
-    public void check(Trace trace) {
+    public void check(final Trace trace) {
         trace.setStatus(isCompliant(trace) ? TraceStatus.COMPLIANT : TraceStatus.NONCOMPLIANT);
     }
 

@@ -16,13 +16,14 @@ import nl.rug.ap.a1.cases.TraceStatus;
 public class ThreeWayAfterGR implements ComplianceStrategy{
 
     @Override
-    public void check(Trace trace){
+    public void check(final Trace trace){
         trace.setStatus(isCompliant(trace) ? TraceStatus.COMPLIANT : TraceStatus.NONCOMPLIANT);
     }
 
     @Override
-    public boolean isCompliant(Trace trace) {
-        int countGoods = 0, countInv = 0;
+    public boolean isCompliant(final Trace trace) {
+        int countGoods = 0;
+        int countInv = 0;
         boolean isCleared = false;
 
         for (Event e : trace.getEvents()) {

@@ -33,7 +33,7 @@ public class Main {
      *
      * @param args command-line arguments (not used)
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
         if (args.length < 1) {
             System.out.println("Please provide a CSV file name from event_log folder to process.");

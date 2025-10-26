@@ -9,6 +9,8 @@
     <suppress checks="EmptyLineSeparator"/>
     <suppress checks="JavadocPackage"/>
     <suppress checks="RegexpSingleline"/>
-    <suppress checks="AvoidStarImport"/>
     <suppress checks="HiddenField"/>
+    <suppress checks="MissingSwitchDefault"/>
+    <suppress checks="DesignForExtension"/>
+    <suppress checks="HideUtilityClassConstructor"/>
 </suppressions>

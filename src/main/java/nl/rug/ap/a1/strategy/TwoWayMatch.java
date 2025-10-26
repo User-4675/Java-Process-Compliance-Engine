@@ -15,15 +15,14 @@ import nl.rug.ap.a1.cases.TraceStatus;
 public class TwoWayMatch implements ComplianceStrategy{
 
     @Override
-    public void check(Trace trace) {
+    public void check(final Trace trace) {
         trace.setStatus(isCompliant(trace) ? TraceStatus.COMPLIANT : TraceStatus.NONCOMPLIANT);
     }
 
     @Override
-    public boolean isCompliant(Trace trace){
+    public boolean isCompliant(final Trace trace){
         if (trace.getEvents().stream().anyMatch(e ->
-                e.getActivity().equals("Record Goods Receipt") ||
-                e.getActivity().equals("Record Service Entry Sheet"))
+                e.getActivity().equals("Record Goods Receipt") || e.getActivity().equals("Record Service Entry Sheet"))
         ) return false;
 
         int counter = 0;

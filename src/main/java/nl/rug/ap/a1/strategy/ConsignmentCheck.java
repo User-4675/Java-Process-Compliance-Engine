@@ -15,7 +15,7 @@ public class ConsignmentCheck implements ComplianceStrategy {
     }
 
     @Override
-    public boolean isCompliant(Trace trace){
+    public boolean isCompliant(final Trace trace){
         return true;
     }
 }

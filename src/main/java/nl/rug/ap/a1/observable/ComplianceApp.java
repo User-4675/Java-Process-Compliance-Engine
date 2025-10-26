@@ -25,7 +25,7 @@ public class ComplianceApp implements Observable {
     private ProgressObserver observer;
 
     /** Checker that evaluates trace compliance. */
-    ComplianceManager checker = new ComplianceManager();
+    private ComplianceManager checker = new ComplianceManager();
 
     /** Special trace used as a marker to signal completion to consumers. */
     private static final Trace POISON_PILL = new Trace("POISON", "POISON");
@@ -46,15 +46,18 @@ public class ComplianceApp implements Observable {
      * @param nOfThreads  number of consumer threads to use
      * @param showProg    Enable/Disable live progress
      */
-    public void startComplianceCheck(Map<String, Trace> traceMap, int nOfThreads, boolean showProg) {
+    public void startComplianceCheck(final Map<String, Trace> traceMap, final int nOfThreads, final boolean showProg) {
         long appStart = System.nanoTime();
 
         BlockingQueue<Trace> bQueue = new LinkedBlockingQueue<>();
         Thread producer = new Thread(() -> {
             loadQueue(bQueue, traceMap);
             for (int i = 0; i < nOfThreads; i++){
-                try { bQueue.put(POISON_PILL);}
-                catch (InterruptedException e){ Thread.currentThread().interrupt();}
+                try {
+                    bQueue.put(POISON_PILL);
+                } catch (InterruptedException e){
+                    Thread.currentThread().interrupt();
+                }
             }
         });
         producer.start();
@@ -86,7 +89,7 @@ public class ComplianceApp implements Observable {
      * @param bQueue   the queue to add traces to
      * @param traceMap map of traces to process
      */
-    private void loadQueue(BlockingQueue<Trace> bQueue, Map<String, Trace> traceMap) {
+    private void loadQueue(final BlockingQueue<Trace> bQueue,final Map<String, Trace> traceMap) {
         for (Trace t : traceMap.values()) {
             try {
                 bQueue.put(t);
@@ -102,8 +105,9 @@ public class ComplianceApp implements Observable {
      * and notifies the observer.
      *
      * @param bQueue the queue to consume traces from
+     * @param showProg Show progress
      */
-    private void processTraces(BlockingQueue<Trace> bQueue, boolean showProg) {
+    private void processTraces(final BlockingQueue<Trace> bQueue,final boolean showProg) {
         try {
             while (true) {
                 Trace trace = bQueue.take();
@@ -128,7 +132,7 @@ public class ComplianceApp implements Observable {
      * @param start start time in nanoseconds
      * @param end   end time in nanoseconds
      */
-    private synchronized void recordMetrics(long start, long end) {
+    private synchronized void recordMetrics(final long start,final long end) {
         totalCheckTime += (end - start);
 
         long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
@@ -141,7 +145,7 @@ public class ComplianceApp implements Observable {
      * @param observer the observer to add
      */
     @Override
-    public void addObserver(ProgressObserver observer) {
+    public void addObserver(final ProgressObserver observer) {
         this.observer = observer;
     }
 
@@ -151,7 +155,7 @@ public class ComplianceApp implements Observable {
      * @param trace the trace that was processed
      */
     @Override
-    public void notifyObserver(Trace trace) {
+    public void notifyObserver(final Trace trace) {
         observer.updateProgress(trace);
     }
 }

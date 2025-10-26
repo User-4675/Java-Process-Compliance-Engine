@@ -31,7 +31,7 @@ public enum ConsoleColor {
      *
      * @param code the ANSI escape code for this color
      */
-    ConsoleColor(String code) {
+    ConsoleColor(final String code) {
         this.code = code;
     }
 

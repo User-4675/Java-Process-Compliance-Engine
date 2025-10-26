@@ -12,10 +12,10 @@ import java.util.Map;
  */
 public class ComplianceManager {
 
-    /** Contains all available strategies */
+    /** Contains all available strategies. */
     private final Map<TraceType, ComplianceStrategy> strategies;
 
-    /** Contains general rules that every case needs to follow */
+    /** Contains general rules that every case needs to follow. */
     private final GeneralRulesCheck general = new GeneralRulesCheck();
 
     /**
@@ -40,7 +40,7 @@ public class ComplianceManager {
      * Decides for correct check type to be done.
      * @param trace a trace to evaluate
      * */
-    public void check(Trace trace){
+    public void check(final Trace trace){
         ComplianceStrategy strategy = strategies.get(trace.getType());
         // Check the general criteria first
         general.check(trace);
