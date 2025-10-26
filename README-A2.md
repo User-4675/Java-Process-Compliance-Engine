@@ -1,4 +1,4 @@
-# Assignment 1
+# Assignment 2
 
 This README provides instructions on how to compile and run the application, along with an explanation of its design.
 
@@ -9,14 +9,14 @@ This README provides instructions on how to compile and run the application, alo
 
        mvn clean package
 
-    This will:
-    
+   This will:
+
     - Clean any previous build files.
     - Compile all Java source files.
-      - Run unit tests
+        - Run unit tests
     - Generate a runnable JAR with all dependencies.
 
-    After this step, the JAR will be located at:
+   After this step, the JAR will be located at:
 
        target/assignment1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
@@ -25,8 +25,8 @@ This README provides instructions on how to compile and run the application, alo
        java -jar target/assignment1-1.0-SNAPSHOT-jar-with-dependencies.jar
 
    The program will start and prompt you for the number of threads to use for processing traces as
-    part of configuration. You will also be able to enable or disable live progress (Note that this will
-    impact the performance).
+   part of configuration. You will also be able to enable or disable live progress (Note that this will
+   impact the performance).
 
 3. Open the Javadoc documentation.
    After running Maven, the HTML documentation will be generated at:
@@ -47,9 +47,10 @@ It also keeps track of program statistics and implements two design patterns.
 ##### a) Handling Large File Size
 
 To handle the large csv file efficiently:
- - We read the CSV as a stream using InputStream and InputStreamReader, avoiding loading the entire file into memory.
- - We parse records one by one using Apache Commons CSV, storing only necessary information in Trace objects.
- - This streaming approach ensures low memory usage and enables the program to scale to larger datasets.
+- We read the CSV as a stream using InputStream and InputStreamReader, avoiding loading the entire file into memory.
+- We parse records one by one using Apache Commons CSV, storing only necessary information in Trace objects.
+- This streaming approach ensures low memory usage and enables the program to scale to larger datasets.
+- Additionally, we declare necessary classes for compliance checking, hash map and data loading once, and reuse them for other files 
 
 #####  b) Implementation of required design patterns
 
@@ -72,25 +73,44 @@ In our project, we implemented two design patterns to improve modularity and per
 
 ##### c) **Multithreading**
 
-Our application allows the user to configure the number of threads and also prompts whether they want to see live progress. 
-Since the compliance check operation on each case is very fast, printing live progress introduces a significant bottleneck, 
-which can dominate the total runtime. To measure the real processing speed of the multithreaded implementation, 
-the user can choose not to display live progress. To confirm this effect, we ran three test cases where live 
+Our application allows the user to configure the number of threads and also prompts whether they want to see live progress.
+Since the compliance check operation on each case is very fast, printing live progress introduces a significant bottleneck,
+which can dominate the total runtime. To measure the real processing speed of the multithreaded implementation,
+the user can choose not to display live progress. To confirm this effect, we ran three test cases where live
 progress was disabled and the expected speedup from using multiple threads could be observed.
 
-    1. Statistic when using single thread: 
-        - Max Consumed Memory: 898.740 MB
-        - Total log processing time: 0.225 s
-        - Average case processing time: 669.714 ns
------------------------------------------------------------------------
-    2. Statistics when using two threads
-        - Max Consumed Memory: 899.440 MB
-        - Total log processing time: 0.199 s
-        - Average case processing time: 1069.876 ns
------------------------------------------------------------------------
-    3. Statistics when using three threads:
-        - Max Consumed Memory: 494.305 MB
-        - Total log processing time: 0.149 s
-        - Average case processing time: 1215.606 ns
------------------------------------------------------------------------
+>    1. Statistic when using single thread: 
+>        - Max Consumed Memory: 898.740 MB
+>        - Total log processing time: 0.225 s
+>        - Average case processing time: 669.714 ns
+***
+>    2. Statistics when using two threads
+>        - Max Consumed Memory: 899.440 MB
+>        - Total log processing time: 0.199 s
+>        - Average case processing time: 1069.876 ns
+***
+>    3. Statistics when using three threads:
+>        - Max Consumed Memory: 494.305 MB
+>        - Total log processing time: 0.149 s
+>        - Average case processing time: 1215.606 ns
+***
+***
+##### d) **Revised Explanation of The Design** 
 
+Second assignment introduced trace types and new compliance checking procedures. To adapt our code, we introduced
+new `TraceType` and modified `Trace` and `DataLoader` to store new data. However, main challenge came with introduction of new
+compliance rules. We completely rebuild the compliance checking, and introduced multiple checker classes for each `TraceType` (more 
+about the *strategy pattern* below). Regarding the CI pipeline, we modified our project folder system with introduction of 
+`event_log/` folder in root. This folder serves as file input folder for out program. We have implemented a new `ReportGenerator`
+that stores the results of compliance checking in `reports/` folder in root directory of our project. Lastly, we have introduced
+new, more robust, testing suites to ensure the correctness of our program.
+
+##### e) **Implementation Of Strategy Pattern**
+
+Strategy pattern has proven to be very efficient for our project, as it allowed us to apply specific compliance flow checking for 
+individual trace types. The design consist of `ComplianceStrategy` interface that hides the implementation of each strategy.
+`ComplianceManager` is responsible for applying the correct strategy on specific `Traces` based on their `TraceType`. Lastly, 
+we have five check classes, that set the correct `TraceStatus` based on the `Events`. Strategy pattern is located in `startegy/` 
+folder in source root.
+
+##### f) **CI Pipeline**
