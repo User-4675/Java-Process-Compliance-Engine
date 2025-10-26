@@ -35,11 +35,17 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        String eventLogFolder = "event_log";
-        File folder = new File(eventLogFolder);
+        if (args.length < 1) {
+            System.out.println("Please provide a CSV file name from event_log folder to process.");
+            return;
+        }
 
-        if (!folder.exists() || !folder.isDirectory()){
-            System.out.println("Event log folder not found: " + eventLogFolder);
+        String fileName = args[0];
+        String filePath = "event_log/" + fileName;
+        File file = new File(filePath);
+
+        if (!file.exists() || !file.isFile()){
+            System.out.println("The file '" + filePath + "' does not exist or is not a file.");
             return;
         }
 
@@ -58,26 +64,20 @@ public class Main {
 
         config.getConfiguration();
 
-        File[] files = folder.listFiles((dir, name) -> name.endsWith(".csv"));
-        if (files != null){
-            for (File file : files){
-                System.out.println("\nProcessing file: " + file.getName());
+        System.out.println("\nProcessing file: " + fileName);
 
-                /* Start new process for each file */
-                boolean success = loader.load(traceMap, file.getPath());
-                if (!success) System.out.println("Failed to load file: " + file.getName());
-                multithreadComplianceApp.startComplianceCheck(
-                        traceMap, config.getNoOfThreads(), config.isShowLiveProgress()
-                );
-
-                /* Create a report */
-                success =  reportGenerator.generateReport(traceMap, file.getName());
-                if (!success) System.out.println("Failed to generate the report for " + file.getName());
-
-                /* Clear hash map and reset stats after done */
-                traceMap.clear();
-                tracker.reset();
-            }
+        /* Start new process for each file */
+        boolean success = loader.load(traceMap, filePath);
+        if (!success) {
+            System.out.println("Failed to load file: " + fileName);
+            return;
         }
+        multithreadComplianceApp.startComplianceCheck(
+                traceMap, config.getNoOfThreads(), config.isShowLiveProgress()
+        );
+
+        /* Create a report */
+        success = reportGenerator.generateReport(traceMap, fileName);
+        if (!success) System.out.println("Failed to generate the report for " + fileName);
     }
 }
